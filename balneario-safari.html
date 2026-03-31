@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Balneario Safari – La Mesa, Cundinamarca</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── VARIABLES ─────────────────────────────────────────── */
+    :root {
+      --turquoise: #00C2C7;
+      --turquoise-dark: #009fa4;
+      --orange: #FF6B2B;
+      --yellow: #FFD600;
+      --white: #FFFFFF;
+      --dark: #1A2233;
+      --gray: #F4F7FA;
+      --text: #2D3748;
+      --radius: 2rem;
+      --shadow: 0 8px 40px rgba(0,194,199,0.15);
+    }
+
+    /* ─── RESET / BASE ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+    h1, h2, h3, .logo { font-family: 'Fredoka One', cursive; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    section { position: relative; }
+
+    /* ─── WAVE HELPER ────────────────────────────────────────── */
+    .wave-bottom {
+      position: absolute; bottom: -2px; left: 0; width: 100%; overflow: hidden; line-height: 0;
+    }
+    .wave-bottom svg { display: block; width: 100%; height: 80px; }
+
+    /* ─── NAV ────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 6%;
+      background: rgba(0,194,199,0.92);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+      transition: background 0.3s;
+    }
+    .logo {
+      font-size: 1.8rem;
+      color: var(--white);
+      letter-spacing: 1px;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .logo span { color: var(--yellow); }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      color: var(--white); font-weight: 700; font-size: 0.95rem;
+      letter-spacing: 0.5px; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--yellow); }
+    .nav-cta {
+      background: var(--orange); color: var(--white);
+      padding: 0.6rem 1.5rem; border-radius: 50px;
+      font-weight: 800; font-size: 0.9rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(255,107,43,0.4);
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,107,43,0.5); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 25px; height: 3px; background: var(--white); border-radius: 3px; transition: 0.3s; }
+
+    /* ─── HERO ───────────────────────────────────────────────── */
+    #inicio {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 7rem 6% 10rem;
+      background: linear-gradient(135deg, #003f5c 0%, #006b70 45%, #00C2C7 100%);
+      overflow: hidden;
+    }
+    .hero-content { flex: 1; z-index: 2; }
+    .hero-badge {
+      display: inline-block;
+      background: var(--yellow); color: var(--dark);
+      font-weight: 800; font-size: 0.85rem;
+      padding: 0.4rem 1.2rem; border-radius: 50px;
+      margin-bottom: 1.2rem; letter-spacing: 1px; text-transform: uppercase;
+      animation: fadeInUp 0.6s ease both;
+    }
+    .hero-title {
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      color: var(--white); line-height: 1.05;
+      margin-bottom: 1.2rem;
+      animation: fadeInUp 0.7s 0.1s ease both;
+    }
+    .hero-title span { color: var(--yellow); }
+    .hero-sub {
+      font-size: 1.15rem; color: rgba(255,255,255,0.88);
+      max-width: 500px; line-height: 1.7;
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.7s 0.2s ease both;
+    }
+    .hero-buttons {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeInUp 0.7s 0.3s ease both;
+    }
+    .btn-primary {
+      background: var(--orange); color: var(--white);
+      padding: 1rem 2.2rem; border-radius: 50px;
+      font-family: 'Fredoka One', cursive; font-size: 1.15rem;
+      box-shadow: 0 6px 25px rgba(255,107,43,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none; cursor: pointer;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(255,107,43,0.6); }
+    .btn-secondary {
+      background: transparent; color: var(--white);
+      padding: 1rem 2.2rem; border-radius: 50px;
+      font-family: 'Fredoka One', cursive; font-size: 1.15rem;
+      border: 2.5px solid rgba(255,255,255,0.6);
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.15); }
+    .hero-visual {
+      flex: 1; display: flex; justify-content: center; align-items: center;
+      position: relative; z-index: 2;
+      animation: fadeInRight 0.9s 0.2s ease both;
+    }
+    .hero-img-wrap {
+      width: clamp(280px, 42vw, 520px);
+      aspect-ratio: 4/3;
+      border-radius: 2.5rem;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+      border: 4px solid rgba(255,255,255,0.3);
+    }
+    .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    /* floating bubbles */
+    .bubble {
+      position: absolute; border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      animation: float 6s ease-in-out infinite;
+    }
+    .b1 { width: 220px; height: 220px; top: 5%; right: 2%; animation-delay: 0s; }
+    .b2 { width: 120px; height: 120px; bottom: 12%; right: 8%; animation-delay: 2s; }
+    .b3 { width: 80px; height: 80px; top: 30%; left: 3%; animation-delay: 1s; }
+    .hero-wave { position: absolute; bottom: -2px; left: 0; width: 100%; }
+    .hero-wave svg { display: block; }
+
+    /* ─── STATS BAR ──────────────────────────────────────────── */
+    .stats-bar {
+      background: var(--yellow);
+      padding: 1.5rem 6%;
+      display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Fredoka One', cursive; font-size: 2.2rem; color: var(--dark); }
+    .stat-label { font-size: 0.85rem; font-weight: 700; color: var(--dark); opacity: 0.75; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ─── SOBRE NOSOTROS ─────────────────────────────────────── */
+    #nosotros {
+      padding: 7rem 6% 6rem;
+      background: var(--white);
+    }
+    .section-label {
+      display: inline-block;
+      background: rgba(0,194,199,0.1); color: var(--turquoise-dark);
+      font-weight: 800; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+      padding: 0.35rem 1rem; border-radius: 50px; margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--dark); margin-bottom: 1rem; line-height: 1.15;
+    }
+    .section-title span { color: var(--turquoise); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem;
+    }
+    .about-text p {
+      font-size: 1.05rem; line-height: 1.8; color: #4A5568; margin-bottom: 1.2rem;
+    }
+    .about-features {
+      display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;
+    }
+    .feature-item {
+      display: flex; align-items: center; gap: 0.8rem;
+      font-weight: 700; color: var(--dark);
+    }
+    .feature-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--turquoise), var(--turquoise-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .about-img-stack { position: relative; }
+    .about-img-main {
+      width: 100%; border-radius: 2rem; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    .about-img-main img { width: 100%; height: 380px; object-fit: cover; }
+    .about-badge-card {
+      position: absolute; bottom: -1.5rem; left: -1.5rem;
+      background: var(--orange); color: var(--white);
+      padding: 1.2rem 1.5rem; border-radius: 1.5rem;
+      box-shadow: 0 10px 30px rgba(255,107,43,0.35);
+    }
+    .about-badge-card .big { font-family: 'Fredoka One', cursive; font-size: 2rem; display: block; }
+    .about-badge-card small { font-size: 0.8rem; font-weight: 700; opacity: 0.9; }
+
+    /* ─── SERVICIOS ──────────────────────────────────────────── */
+    #servicios {
+      padding: 8rem 6% 6rem;
+      background: linear-gradient(180deg, #f0fffe 0%, #e6f9fa 100%);
+    }
+    .services-header { text-align: center; margin-bottom: 3.5rem; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.8rem;
+    }
+    .service-card {
+      background: var(--white);
+      border-radius: 1.8rem;
+      padding: 2.2rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 30px rgba(0,194,199,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: default;
+      border: 2px solid transparent;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 50px rgba(0,194,199,0.2);
+      border-color: var(--turquoise);
+    }
+    .service-icon {
+      width: 70px; height: 70px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin: 0 auto 1.2rem;
+    }
+    .service-card h3 { font-size: 1.25rem; color: var(--dark); margin-bottom: 0.6rem; }
+    .service-card p { font-size: 0.9rem; color: #718096; line-height: 1.6; }
+
+    /* ─── GALERÍA ────────────────────────────────────────────── */
+    #galeria {
+      padding: 7rem 6%;
+      background: var(--white);
+    }
+    .gallery-header { text-align: center; margin-bottom: 3rem; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 1rem;
+    }
+    .gallery-item {
+      border-radius: 1.2rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-item img, .gallery-item video {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.05); }
+    .gallery-item.tall { grid-row: span 2; }
+    .gallery-item.wide { grid-column: span 2; }
+    .gallery-item video { height: 280px; }
+    .gallery-item.tall img { height: 100%; min-height: 420px; }
+    .gallery-item:not(.tall):not(.wide) img { height: 220px; }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(0,31,35,0.55) 100%);
+      opacity: 0; transition: opacity 0.3s;
+      display: flex; align-items: flex-end; padding: 1rem;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay span { color: var(--white); font-weight: 700; font-size: 0.95rem; }
+
+    /* ─── RESERVAS ───────────────────────────────────────────── */
+    #reservas {
+      padding: 7rem 6%;
+      background: linear-gradient(135deg, #003f5c 0%, #006b70 60%, #00C2C7 100%);
+    }
+    .reservas-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .reservas-text h2 { color: var(--white); margin-bottom: 1rem; }
+    .reservas-text p { color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 1.5rem; }
+    .reservas-text .section-label { background: rgba(255,214,0,0.2); color: var(--yellow); }
+    .form-card {
+      background: var(--white);
+      border-radius: 2rem;
+      padding: 2.5rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+    .form-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.6rem; color: var(--dark); margin-bottom: 1.5rem;
+    }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block; font-weight: 700; font-size: 0.85rem;
+      color: #4A5568; margin-bottom: 0.4rem; letter-spacing: 0.5px;
+    }
+    .form-group input, .form-group select {
+      width: 100%; padding: 0.85rem 1.1rem;
+      border: 2px solid #E2E8F0; border-radius: 0.8rem;
+      font-family: 'Nunito', sans-serif; font-size: 0.95rem;
+      color: var(--dark); transition: border-color 0.2s;
+      outline: none; background: #FAFAFA;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--turquoise); background: var(--white); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn-reservar {
+      width: 100%; padding: 1rem;
+      background: linear-gradient(135deg, var(--orange), #ff8c42);
+      color: var(--white); border: none; border-radius: 0.8rem;
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+      cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 20px rgba(255,107,43,0.35); margin-top: 0.5rem;
+    }
+    .btn-reservar:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(255,107,43,0.5); }
+    .btn-whatsapp-form {
+      width: 100%; padding: 0.85rem;
+      background: #25D366; color: var(--white); border: none; border-radius: 0.8rem;
+      font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+      cursor: pointer; margin-top: 0.8rem; transition: transform 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    }
+    .btn-whatsapp-form:hover { transform: translateY(-2px); }
+
+    /* ─── CONTACTO ───────────────────────────────────────────── */
+    #contacto {
+      padding: 7rem 6%;
+      background: var(--gray);
+    }
+    .contact-header { text-align: center; margin-bottom: 3.5rem; }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-card {
+      background: var(--white);
+      border-radius: 1.5rem; padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .contact-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--turquoise), var(--turquoise-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0;
+    }
+    .contact-card h4 { font-size: 0.85rem; color: #718096; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem; }
+    .contact-card p { font-weight: 700; color: var(--dark); }
+    .social-links { display: flex; gap: 1rem; margin-top: 0.5rem; }
+    .social-btn {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; color: var(--white);
+      transition: transform 0.2s;
+    }
+    .social-btn:hover { transform: scale(1.1); }
+    .sb-ig { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
+    .sb-fb { background: #1877F2; }
+    .sb-tk { background: #010101; }
+    .map-container {
+      border-radius: 1.8rem; overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      height: 380px;
+    }
+    .map-container iframe { width: 100%; height: 100%; border: none; }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      padding: 3rem 6% 2rem;
+      color: rgba(255,255,255,0.65);
+    }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .footer-logo { font-size: 1.6rem; color: var(--white); }
+    .footer-logo span { color: var(--yellow); }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.9rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--turquoise); }
+    .footer-bottom { text-align: center; font-size: 0.82rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; }
+
+    /* ─── WHATSAPP FLOAT ─────────────────────────────────────── */
+    .wa-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; color: var(--white);
+      box-shadow: 0 6px 25px rgba(37,211,102,0.5);
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: pulse 2.5s infinite;
+    }
+    .wa-float:hover { transform: scale(1.12); box-shadow: 0 12px 35px rgba(37,211,102,0.7); animation: none; }
+
+    /* ─── ANIMATIONS ─────────────────────────────────────────── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 6px 25px rgba(37,211,102,0.5); }
+      50% { box-shadow: 0 6px 45px rgba(37,211,102,0.8); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: fixed; top: 70px; left: 0; right: 0;
+        background: rgba(0,100,106,0.98); padding: 1.5rem 6%;
+        gap: 1.2rem; backdrop-filter: blur(12px);
+      }
+      #inicio { flex-direction: column; text-align: center; padding-top: 8rem; }
+      .hero-sub { margin: 0 auto 2rem; }
+      .hero-buttons { justify-content: center; }
+      .hero-visual { margin-top: 2.5rem; }
+      .about-grid, .reservas-inner, .contact-grid { grid-template-columns: 1fr; }
+      .about-badge-card { left: 1rem; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item.wide { grid-column: span 2; }
+      .gallery-item.tall { grid-row: span 1; }
+      .gallery-item.tall img { min-height: 220px; }
+    }
+    @media (max-width: 600px) {
+      .stats-bar { flex-direction: column; gap: 1.5rem; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item.wide { grid-column: span 1; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav id="navbar">
+  <div class="logo">🌴 Balneario <span>Safari</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#reservas">Reservas</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#reservas" class="nav-cta">¡Reserva Ya! 🎉</a>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="inicio">
+  <div class="bubble b1"></div>
+  <div class="bubble b2"></div>
+  <div class="bubble b3"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">🌴 La Mesa, Cundinamarca</div>
+    <h1 class="hero-title">
+      Tu Paraíso de<br/><span>Diversión & Frescura</span>
+    </h1>
+    <p class="hero-sub">
+      Escápate del calor y vive una experiencia única en familia. Piscinas espectaculares, gastronomía deliciosa y naturaleza que te roba el aliento. ¡Te esperamos!
+    </p>
+    <div class="hero-buttons">
+      <a href="#reservas" class="btn-primary">🎉 ¡Reserva Ahora!</a>
+      <a href="#galeria" class="btn-secondary">Ver Galería →</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-img-wrap">
+      <img src="pool.png" alt="Piscina Balneario Safari" />
+    </div>
+  </div>
+
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#FFD600"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════ STATS ═══════════════ -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">+5,000</div><div class="stat-label">Visitantes Felices</div></div>
+  <div class="stat"><div class="stat-num">5</div><div class="stat-label">Servicios Premium</div></div>
+  <div class="stat"><div class="stat-num">365</div><div class="stat-label">Días al Año</div></div>
+  <div class="stat"><div class="stat-num">⭐ 4.9</div><div class="stat-label">Calificación</div></div>
+</div>
+
+<!-- ═══════════════ NOSOTROS ═══════════════ -->
+<section id="nosotros">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <span class="section-label">Sobre Nosotros</span>
+      <h2 class="section-title">Donde la Naturaleza<br/><span>Se Convierte en Aventura</span></h2>
+      <p>Balneario Safari nació con un sueño: crear el destino perfecto donde las familias, amigos y parejas puedan desconectarse del ajetreo y reconectarse con lo que realmente importa — la alegría, la naturaleza y los momentos únicos.</p>
+      <p>Ubicados en las verdes montañas de La Mesa, Cundinamarca, contamos con instalaciones de primer nivel, rodeadas de exuberante vegetación y con vistas que cortan la respiración. Aquí, cada visita se convierte en un recuerdo para toda la vida.</p>
+      <div class="about-features">
+        <div class="feature-item">
+          <div class="feature-icon">🏊</div>
+          Piscinas de agua cristalina con vista panorámica
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🍽️</div>
+          Gastronomía local y coctelería artesanal
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🌿</div>
+          Entorno natural 100% auténtico
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🎉</div>
+          Eventos privados y corporativos
+        </div>
+      </div>
+    </div>
+    <div class="about-img-stack reveal">
+      <div class="about-img-main">
+        <img src="zona.png" alt="Zona de eventos Balneario Safari" />
+      </div>
+      <div class="about-badge-card">
+        <span class="big">🌴</span>
+        <small>Experiencia<br/>Inigualable</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SERVICIOS ═══════════════ -->
+<section id="servicios">
+  <div class="services-header reveal">
+    <span class="section-label">Lo Que Ofrecemos</span>
+    <h2 class="section-title">Todo Lo Que Necesitas<br/><span>En Un Solo Lugar</span></h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon" style="background: linear-gradient(135deg,#00C2C7,#0098a0);">🍹</div>
+      <h3>Bar Tropical</h3>
+      <p>Cócteles artesanales, bebidas tropicales y la mejor carta para refrescarte mientras disfrutas del ambiente.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon" style="background: linear-gradient(135deg,#FF6B2B,#ff9857);">🍽️</div>
+      <h3>Restaurante</h3>
+      <p>Sabores auténticos de la región preparados con ingredientes frescos. ¡La mejor gastronomía a la orilla de la piscina!</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon" style="background: linear-gradient(135deg,#FFD600,#ffc000);">🍦</div>
+      <h3>Heladería</h3>
+      <p>Helados artesanales de frutas tropicales, paletas y postres que hacen que el día caliente valga aún más la pena.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon" style="background: linear-gradient(135deg,#6C63FF,#4a43cc);">🚗</div>
+      <h3>Parqueadero</h3>
+      <p>Amplio parqueadero seguro y vigilado para que llegues tranquilo y disfrutes tu día sin preocupaciones.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon" style="background: linear-gradient(135deg,#FF4E8C,#cc2060);">🎊</div>
+      <h3>Eventos Privados</h3>
+      <p>Celebra cumpleaños, empresariales, matrimonios y más con nosotros. ¡Tu evento soñado en el mejor escenario!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ GALERÍA ═══════════════ -->
+<section id="galeria">
+  <div class="gallery-header reveal">
+    <span class="section-label">Galería</span>
+    <h2 class="section-title">Mira Con Tus Propios Ojos<br/><span>El Paraíso que Te Espera</span></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item tall">
+      <img src="pool.png" alt="Piscina panorámica" />
+      <div class="gallery-overlay"><span>🏊 Piscina Principal</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="zona.png" alt="Zona de eventos" />
+      <div class="gallery-overlay"><span>🎊 Zona de Eventos</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="pool.png" alt="Vista aérea piscina" />
+      <div class="gallery-overlay"><span>🌿 Vista Natural</span></div>
+    </div>
+    <div class="gallery-item wide">
+      <video autoplay muted loop playsinline>
+        <source src="video.mp4" type="video/mp4" />
+      </video>
+      <div class="gallery-overlay"><span>🎬 Balneario Safari en Acción</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ RESERVAS ═══════════════ -->
+<section id="reservas">
+  <div class="reservas-inner">
+    <div class="reservas-text reveal">
+      <span class="section-label">Reserva Tu Lugar</span>
+      <h2 class="section-title" style="color:var(--white)">¡No Te Quedes Sin<br/>Tu Día de Paraíso!</h2>
+      <p>Los cupos son limitados y se agotan rápido. Asegura tu visita ahora y llega a disfrutar sin complicaciones. Tu familia merece este descanso. 🌴</p>
+      <p style="color:var(--yellow); font-weight:800; font-size:1.1rem;">✅ Sin costo de reserva &nbsp; ✅ Atención personalizada</p>
+    </div>
+    <div class="form-card reveal">
+      <div class="form-title">🎉 Reserva en Segundos</div>
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input type="text" placeholder="¿Cómo te llamas?" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Teléfono / WhatsApp</label>
+          <input type="tel" placeholder="+57 300 000 0000" />
+        </div>
+        <div class="form-group">
+          <label>Número de personas</label>
+          <select>
+            <option>1 – 2 personas</option>
+            <option>3 – 5 personas</option>
+            <option>6 – 10 personas</option>
+            <option>+10 personas</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Fecha de visita</label>
+          <input type="date" />
+        </div>
+        <div class="form-group">
+          <label>Tipo de visita</label>
+          <select>
+            <option>Día familiar</option>
+            <option>Grupo de amigos</option>
+            <option>Evento privado</option>
+            <option>Corporativo</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-reservar" onclick="enviarReserva()">🎉 ¡Confirmar Reserva!</button>
+      <a href="https://wa.me/573000000000?text=Hola!%20Quiero%20reservar%20en%20Balneario%20Safari%20🌴" target="_blank">
+        <button class="btn-whatsapp-form">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Reservar por WhatsApp
+        </button>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CONTACTO ═══════════════ -->
+<section id="contacto">
+  <div class="contact-header reveal">
+    <span class="section-label">Encuéntranos</span>
+    <h2 class="section-title">¿Cómo Llegar a<br/><span>Nuestro Paraíso?</span></h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <div>
+          <h4>Dirección</h4>
+          <p>La Mesa, Cundinamarca, Colombia</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <div>
+          <h4>Teléfono / WhatsApp</h4>
+          <p>+57 300 000 0000</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <h4>Horario</h4>
+          <p>Lunes a Domingo · 9:00 am – 6:00 pm</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📱</div>
+        <div>
+          <h4>Síguenos</h4>
+          <div class="social-links">
+            <a href="#" class="social-btn sb-ig" title="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="#" class="social-btn sb-fb" title="Facebook">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="#" class="social-btn sb-tk" title="TikTok">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="map-container reveal">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31838.85!2d-74.4599!3d4.6331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f8c68bb2a3c0b%3A0x7e97e3c1b1e3fa0!2sLa%20Mesa%2C%20Cundinamarca!5e0!3m2!1ses!2sco!4v1680000000000!5m2!1ses!2sco"
+        allowfullscreen loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo logo">🌴 Balneario <span>Safari</span></div>
+    <nav class="footer-links">
+      <a href="#inicio">Inicio</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#galeria">Galería</a>
+      <a href="#reservas">Reservas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    © 2025 Balneario Safari · La Mesa, Cundinamarca · Todos los derechos reservados 🌴
+  </div>
+</footer>
+
+<!-- ═══════════════ WHATSAPP FLOAT ═══════════════ -->
+<a href="https://wa.me/573000000000?text=Hola!%20Quiero%20información%20sobre%20Balneario%20Safari%20🌴" target="_blank" class="wa-float" title="Chatea con nosotros">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<!-- ═══════════════ JS ═══════════════ -->
+<script>
+  // ── Mobile nav
+  const ham = document.getElementById('hamburger');
+  const links = document.getElementById('navLinks');
+  ham.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // ── Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').style.background =
+      window.scrollY > 60 ? 'rgba(0,60,70,0.97)' : 'rgba(0,194,199,0.92)';
+  });
+
+  // ── Fake form submit
+  function enviarReserva() {
+    const inputs = document.querySelectorAll('#reservas input, #reservas select');
+    let valid = true;
+    inputs.forEach(i => { if (!i.value) { i.style.borderColor = '#FF6B2B'; valid = false; } else { i.style.borderColor = '#E2E8F0'; } });
+    if (valid) alert('¡Reserva enviada! 🎉 Te contactaremos pronto. ¡Prepárate para el mejor día de tu vida!');
+  }
+</script>
+</body>
+</html>
