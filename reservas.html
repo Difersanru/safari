@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Reserva tu visita a Balneario Safari, La Mesa, Cundinamarca. Cupos limitados." />
+  <title>Reservas · Balneario Safari</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── RESERVAS SECTION ─────────────────────────────── */
+    #reservas {
+      padding: var(--section-py) 0;
+      background: linear-gradient(160deg,#003f5c 0%,#006b70 55%,#00C2C7 100%);
+      min-height: calc(100vh - 62px);
+    }
+    #reservas .container { display: flex; flex-direction: column; gap: 2rem; }
+
+    .reservas-text h1 { color: var(--white); margin-bottom: 0.8rem; font-size: clamp(2rem,7vw,3.5rem); }
+    .reservas-text p  { color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 1rem; font-size: clamp(0.93rem,3vw,1.05rem); }
+    .reservas-text .section-label { background: rgba(255,214,0,0.2); color: var(--yellow); }
+    .reservas-highlight { color: var(--yellow) !important; font-weight: 800; font-size: 0.97rem; }
+
+    /* Beneficios */
+    .benefits-list { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.5rem; }
+    .benefit-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      color: rgba(255,255,255,0.9); font-weight: 700; font-size: 0.95rem;
+    }
+    .benefit-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+
+    /* Formulario */
+    .form-card {
+      background: var(--white); border-radius: 1.5rem;
+      padding: 1.6rem 1.2rem;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.25);
+    }
+    .form-title { font-family: 'Fredoka One', cursive; font-size: 1.45rem; color: var(--dark); margin-bottom: 1.2rem; }
+
+    .form-group { margin-bottom: 1.05rem; }
+    .form-group label { display: block; font-weight: 700; font-size: 0.82rem; color: #4A5568; margin-bottom: 0.35rem; }
+    .form-group input,
+    .form-group select {
+      width: 100%; padding: 0.85rem 1rem;
+      border: 2px solid #E2E8F0; border-radius: 0.75rem;
+      font-family: 'Nunito', sans-serif; font-size: 1rem;
+      color: var(--dark); background: #FAFAFA; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none; appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus { border-color: var(--turquoise); box-shadow: 0 0 0 3px rgba(0,194,199,0.15); background: var(--white); }
+    .form-group input.error,
+    .form-group select.error { border-color: var(--orange); }
+
+    .form-row { display: flex; flex-direction: column; }
+
+    .btn-reservar {
+      width: 100%; min-height: 52px;
+      background: linear-gradient(135deg, var(--orange), #ff8c42);
+      color: var(--white); border: none; border-radius: 0.85rem;
+      font-family: 'Fredoka One', cursive; font-size: 1.15rem; cursor: pointer;
+      box-shadow: 0 6px 20px rgba(255,107,43,0.4); margin-top: 0.4rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-reservar:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(255,107,43,0.55); }
+    .btn-reservar:active { transform: scale(0.97); }
+
+    .btn-whatsapp-form {
+      width: 100%; min-height: 52px; padding: 0.85rem;
+      background: #25D366; color: var(--white); border: none; border-radius: 0.85rem;
+      font-family: 'Fredoka One', cursive; font-size: 1.05rem; cursor: pointer;
+      margin-top: 0.7rem; display: flex; align-items: center; justify-content: center; gap: 0.55rem;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.35); transition: transform 0.2s;
+      text-decoration: none;
+    }
+    .btn-whatsapp-form:hover { transform: translateY(-2px); }
+
+    /* ─── TABLET ≥ 600px ── */
+    @media (min-width: 600px) {
+      .form-row { flex-direction: row; gap: 1rem; }
+      .form-row .form-group { flex: 1; margin-bottom: 0; }
+    }
+    /* ─── DESKTOP ≥ 768px ── */
+    @media (min-width: 768px) {
+      #reservas .container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+      .form-card { padding: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  🌴 ¡Cupos limitados! Reserva hoy y asegura tu día de paraíso.
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="logo">🌴 Balneario <span>Safari</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="nosotros.html">Nosotros</a></li>
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="galeria.html">Galería</a></li>
+    <li><a href="reservas.html">Reservas</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+  </ul>
+  <a href="reservas.html" class="nav-cta">🎉 ¡Reserva Ya!</a>
+  <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- RESERVAS -->
+<section id="reservas">
+  <div class="container">
+
+    <!-- Texto persuasivo -->
+    <div class="reservas-text reveal">
+      <span class="section-label">Asegura Tu Lugar</span>
+      <h1>¡No Te Quedes Sin<br/>Tu Día de Paraíso!</h1>
+      <p>Los cupos son limitados y se agotan rápido. Asegura tu visita ahora y llega a disfrutar sin complicaciones. Tu familia merece este descanso. 🌴</p>
+      <p class="reservas-highlight">✅ Sin costo de reserva &nbsp;&nbsp; ✅ Respuesta inmediata</p>
+      <div class="benefits-list">
+        <div class="benefit-item"><div class="benefit-icon">🏊</div> Acceso a piscinas panorámicas</div>
+        <div class="benefit-item"><div class="benefit-icon">🍽️</div> Bar, restaurante y heladería disponibles</div>
+        <div class="benefit-item"><div class="benefit-icon">🚗</div> Parqueadero seguro incluido</div>
+        <div class="benefit-item"><div class="benefit-icon">🌿</div> Entorno natural y vistas espectaculares</div>
+      </div>
+    </div>
+
+    <!-- Formulario -->
+    <div class="form-card reveal">
+      <div class="form-title">🎉 Reserva en Segundos</div>
+
+      <div class="form-group">
+        <label for="nombre">Nombre completo</label>
+        <input id="nombre" type="text" placeholder="¿Cómo te llamas?" autocomplete="name" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="telefono">Teléfono / WhatsApp</label>
+          <input id="telefono" type="tel" placeholder="+57 300 000 0000" autocomplete="tel" />
+        </div>
+        <div class="form-group">
+          <label for="personas">N.º de personas</label>
+          <select id="personas">
+            <option value="">Selecciona…</option>
+            <option>1 – 2 personas</option>
+            <option>3 – 5 personas</option>
+            <option>6 – 10 personas</option>
+            <option>+10 personas</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fecha">Fecha de visita</label>
+          <input id="fecha" type="date" />
+        </div>
+        <div class="form-group">
+          <label for="tipo">Tipo de visita</label>
+          <select id="tipo">
+            <option value="">Selecciona…</option>
+            <option>Día familiar</option>
+            <option>Grupo de amigos</option>
+            <option>Evento privado</option>
+            <option>Corporativo</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-reservar" onclick="enviarReserva()">🎉 ¡Confirmar Reserva!</button>
+
+      <button class="btn-whatsapp-form" onclick="enviarWhatsApp()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Reservar por WhatsApp
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo logo">🌴 Balneario <span>Safari</span></div>
+    <nav class="footer-links">
+      <a href="index.html">Inicio</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="galeria.html">Galería</a>
+      <a href="reservas.html">Reservas</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">© 2025 Balneario Safari · La Mesa, Cundinamarca · Todos los derechos reservados 🌴</div>
+</footer>
+
+<a href="https://wa.me/573102562717" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<script src="main.js"></script>
+<script>
+  // ── Función auxiliar: valida campos y construye el mensaje ──
+  function construirMensaje() {
+    const nombre   = document.getElementById('nombre').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    const personas = document.getElementById('personas').value;
+    const fecha    = document.getElementById('fecha').value;
+    const tipo     = document.getElementById('tipo').value;
+
+    // Limpiar errores previos
+    ['nombre','telefono','personas','fecha','tipo'].forEach(id => {
+      document.getElementById(id).classList.remove('error');
+    });
+
+    // Validación básica
+    let valido = true;
+    if (!nombre)   { document.getElementById('nombre').classList.add('error');   valido = false; }
+    if (!telefono) { document.getElementById('telefono').classList.add('error'); valido = false; }
+    if (!personas) { document.getElementById('personas').classList.add('error'); valido = false; }
+    if (!fecha)    { document.getElementById('fecha').classList.add('error');    valido = false; }
+    if (!tipo)     { document.getElementById('tipo').classList.add('error');     valido = false; }
+
+    if (!valido) {
+      alert('Por favor completa todos los campos antes de continuar. 😊');
+      return null;
+    }
+
+    // Formatear la fecha a dd/mm/aaaa
+    const [anio, mes, dia] = fecha.split('-');
+    const fechaFormateada = `${dia}/${mes}/${anio}`;
+
+    const mensaje =
+      `🌴 *Nueva Reserva – Balneario Safari* 🌴\n\n` +
+      `👤 *Nombre:* ${nombre}\n` +
+      `📱 *Teléfono/WhatsApp:* ${telefono}\n` +
+      `👥 *Número de personas:* ${personas}\n` +
+      `📅 *Fecha de visita:* ${fechaFormateada}\n` +
+      `🎟️ *Tipo de visita:* ${tipo}\n\n` +
+      `¡Hola! Quisiera confirmar esta reserva. ¿Tienen disponibilidad? 😊`;
+
+    return mensaje;
+  }
+
+  // ── Botón naranja: "¡Confirmar Reserva!" ──
+  function enviarReserva() {
+    const mensaje = construirMensaje();
+    if (!mensaje) return;
+    const url = `https://wa.me/573102562717?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+  }
+
+  // ── Botón verde: "Reservar por WhatsApp" ──
+  function enviarWhatsApp() {
+    const mensaje = construirMensaje();
+    if (!mensaje) return;
+    const url = `https://wa.me/573102562717?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+  }
+</script>
+</body>
+</html>

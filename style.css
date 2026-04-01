@@ -1,0 +1,462 @@
+/* ══════════════════════════════════════════════════════════════
+   BALNEARIO SAFARI — style.css
+   Estilos globales compartidos por todas las páginas.
+   Mobile-first: los estilos base aplican a pantallas pequeñas
+   y se escalan progresivamente con media queries.
+   ══════════════════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────────────────────
+   1. VARIABLES GLOBALES
+───────────────────────────────────────────────────────────── */
+:root {
+  --turquoise:      #00C2C7;
+  --turquoise-dark: #009fa4;
+  --orange:         #FF6B2B;
+  --yellow:         #FFD600;
+  --white:          #FFFFFF;
+  --dark:           #1A2233;
+  --gray:           #F4F7FA;
+  --text:           #2D3748;
+  --muted:          #718096;
+  --shadow-sm:      0 2px 12px rgba(0,0,0,0.08);
+  --shadow-md:      0 8px 30px rgba(0,0,0,0.12);
+  --shadow-lg:      0 20px 60px rgba(0,0,0,0.15);
+  --section-py:     4rem;   /* padding vertical secciones — mobile base */
+  --section-px:     1.25rem; /* padding horizontal — mobile base */
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   2. RESET & BASE — Mobile-first
+───────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent; /* elimina flash azul en táctil */
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  color: var(--text);
+  background: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+  padding-bottom: 72px; /* espacio para sticky CTA en móvil */
+}
+
+h1, h2, h3, h4, .logo {
+  font-family: 'Fredoka One', cursive;
+  line-height: 1.15;
+}
+
+a { text-decoration: none; color: inherit; }
+img, video { display: block; max-width: 100%; height: auto; }
+section { position: relative; }
+
+/* Contenedor centrado reutilizable */
+.container {
+  width: 100%;
+  padding-left:  var(--section-px);
+  padding-right: var(--section-px);
+  margin: 0 auto;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   3. TIPOGRAFÍA
+───────────────────────────────────────────────────────────── */
+.section-label {
+  display: inline-block;
+  background: rgba(0,194,199,0.12);
+  color: var(--turquoise-dark);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0.3rem 0.9rem;
+  border-radius: 50px;
+  margin-bottom: 0.7rem;
+}
+
+.section-title {
+  font-size: clamp(1.7rem, 5.5vw, 3rem);
+  color: var(--dark);
+  margin-bottom: 0.9rem;
+}
+.section-title span { color: var(--turquoise); }
+
+
+/* ─────────────────────────────────────────────────────────────
+   4. BOTONES — mínimo 48 × 48 px (accesibilidad táctil)
+───────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 52px;
+  padding: 0.85rem 1.8rem;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  -webkit-user-select: none;
+          user-select: none;
+  white-space: nowrap;
+}
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--orange);
+  color: var(--white);
+  box-shadow: 0 6px 20px rgba(255,107,43,0.45);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--white);
+  border: 2.5px solid rgba(255,255,255,0.65);
+}
+
+/* Hover sólo en dispositivos con puntero (no táctil) */
+@media (hover: hover) {
+  .btn-primary:hover  { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(255,107,43,0.55); }
+  .btn-secondary:hover{ background: rgba(255,255,255,0.12); }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   5. ANIMACIONES — respeta prefers-reduced-motion
+───────────────────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-15px); }
+}
+@keyframes pulseShadow {
+  0%, 100% { box-shadow: 0 6px 22px rgba(37,211,102,0.45); }
+  50%      { box-shadow: 0 6px 40px rgba(37,211,102,0.75); }
+}
+
+/* Clase reveal: los elementos aparecen al entrar en pantalla */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  will-change: opacity, transform;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, .reveal { animation: none !important; transition: none !important; }
+  .reveal    { opacity: 1; transform: none; }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   6. BARRA PROMO
+───────────────────────────────────────────────────────────── */
+.promo-banner {
+  background: var(--orange);
+  color: var(--white);
+  text-align: center;
+  padding: 0.7rem var(--section-px);
+  font-weight: 700;
+  font-size: 0.84rem;
+  letter-spacing: 0.3px;
+  margin-top: 62px; /* offset de la nav fija */
+}
+.promo-banner a {
+  color: var(--yellow);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   7. NAVEGACIÓN — Mobile-first
+───────────────────────────────────────────────────────────── */
+#navbar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem var(--section-px);
+  background: rgba(0,155,160,0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+  transition: background 0.3s;
+  min-height: 62px;
+}
+
+.logo {
+  font-size: 1.4rem;
+  color: var(--white);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.logo span { color: var(--yellow); }
+
+/* Hamburger */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 9px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  min-width: 44px;
+  min-height: 44px;
+}
+.hamburger span {
+  width: 24px;
+  height: 2.5px;
+  background: var(--white);
+  border-radius: 3px;
+  transition: transform 0.3s, opacity 0.3s;
+  display: block;
+}
+/* Animación "X" cuando está abierto */
+.hamburger.open span:nth-child(1) { transform: translateY(7.5px)  rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+/* Menú desplegable móvil */
+.nav-links {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 62px;
+  left: 0; right: 0;
+  background: rgba(0,50,58,0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 0.5rem var(--section-px) 1.2rem;
+  list-style: none;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  max-height: calc(100vh - 62px);
+  overflow-y: auto;
+}
+.nav-links.open { display: flex; }
+
+.nav-links li a {
+  display: flex;
+  align-items: center;
+  color: var(--white);
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 0.9rem 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: color 0.2s;
+}
+.nav-links li:last-child a { border-bottom: none; }
+.nav-links a:hover { color: var(--yellow); }
+
+/* CTA del nav: sólo visible en desktop */
+.nav-cta { display: none; }
+
+/* Enlace activo: resalta la sección actual */
+.nav-links a.active { color: var(--yellow); }
+
+
+/* ─────────────────────────────────────────────────────────────
+   8. FOOTER
+───────────────────────────────────────────────────────────── */
+footer {
+  background: var(--dark);
+  padding: 2.5rem var(--section-px) 1.8rem;
+  color: rgba(255,255,255,0.6);
+}
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.3rem;
+  margin-bottom: 1.6rem;
+  text-align: center;
+}
+.footer-logo { font-size: 1.45rem; color: var(--white); }
+.footer-logo span { color: var(--yellow); }
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.1rem;
+}
+.footer-links a { font-size: 0.86rem; transition: color 0.2s; padding: 0.25rem; }
+.footer-links a:hover { color: var(--turquoise); }
+.footer-bottom {
+  text-align: center;
+  font-size: 0.76rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1.2rem;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   9. WHATSAPP FLOTANTE
+───────────────────────────────────────────────────────────── */
+.wa-float {
+  position: fixed;
+  bottom: 80px; right: 1.1rem;
+  z-index: 999;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--white);
+  box-shadow: 0 6px 22px rgba(37,211,102,0.5);
+  animation: pulseShadow 2.5s infinite;
+  transition: transform 0.2s;
+}
+.wa-float:active { transform: scale(0.93); animation: none; }
+/* Tooltip al hacer hover */
+.wa-float::before {
+  content: "¡Chatea con nosotros!";
+  position: absolute;
+  right: 64px;
+  background: var(--dark);
+  color: var(--white);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border-radius: 50px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.wa-float:hover::before { opacity: 1; }
+
+
+/* ─────────────────────────────────────────────────────────────
+   10. STICKY CTA MÓVIL — barra fija en la parte inferior
+───────────────────────────────────────────────────────────── */
+.sticky-mobile-cta {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 998;
+  background: rgba(0,22,30,0.97);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.75rem 1.1rem;
+  display: flex;
+  gap: 0.65rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  transition: opacity 0.3s;
+}
+.sticky-mobile-cta a {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border-radius: 0.75rem;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--white);
+  transition: opacity 0.2s;
+}
+.sticky-mobile-cta a:active { opacity: 0.82; }
+.smc-reserva { background: var(--orange); }
+.smc-wa      { background: #25D366; }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   MEDIA QUERIES — Escalado progresivo (Mobile → Desktop)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── TABLET  ≥ 600px ──────────────────────────────────────── */
+@media (min-width: 600px) {
+  :root {
+    --section-py: 5rem;
+    --section-px: 2rem;
+  }
+}
+
+/* ── DESKTOP  ≥ 1024px ───────────────────────────────────── */
+@media (min-width: 1024px) {
+  :root {
+    --section-py: 7rem;
+    --section-px: 6%;
+  }
+
+  /* Ocultar sticky CTA y restaurar padding del body */
+  .sticky-mobile-cta { display: none; }
+  body { padding-bottom: 0; }
+
+  /* WA flotante reposicionado */
+  .wa-float { bottom: 2rem; right: 1.8rem; width: 60px; height: 60px; }
+
+  /* Promo banner con offset de nav más alta */
+  .promo-banner { margin-top: 70px; }
+
+  /* ── NAV desktop ── */
+  #navbar { padding: 1rem 6%; min-height: 70px; }
+  .hamburger { display: none; }
+  .nav-links {
+    display: flex !important;
+    flex-direction: row;
+    position: static;
+    background: transparent;
+    backdrop-filter: none;
+    padding: 0;
+    border: none;
+    gap: 2rem;
+    max-height: none;
+    overflow: visible;
+  }
+  .nav-links li a {
+    border-bottom: none;
+    padding: 0.2rem 0;
+    font-size: 0.92rem;
+  }
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    background: var(--orange);
+    color: var(--white);
+    padding: 0.55rem 1.4rem;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 0.88rem;
+    box-shadow: 0 4px 14px rgba(255,107,43,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(255,107,43,0.5); }
+
+  /* ── Footer horizontal ── */
+  .footer-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+/* ── LARGE DESKTOP  ≥ 1280px ─────────────────────────────── */
+@media (min-width: 1280px) {
+  .container { max-width: 1240px; }
+}

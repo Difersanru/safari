@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bar, Restaurante, Heladería, Parqueadero y Eventos en Balneario Safari, La Mesa." />
+  <title>Servicios · Balneario Safari</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── HERO INTERNO ─────────────────────────────────── */
+    .page-hero {
+      background: linear-gradient(160deg, #003f5c 0%, #006b70 55%, #00C2C7 100%);
+      padding: 5rem var(--section-px) 3.5rem;
+      text-align: center; color: var(--white);
+    }
+    .page-hero h1 { font-size: clamp(2rem, 7vw, 3.8rem); }
+    .page-hero h1 span { color: var(--yellow); }
+    .page-hero p { font-size: clamp(0.95rem, 3vw, 1.1rem); opacity: 0.88; margin-top: 0.6rem; }
+
+    /* ── SERVICIOS GRID ───────────────────────────────── */
+    #servicios { padding: var(--section-py) 0; background: linear-gradient(180deg,#f0fffe 0%,#e6f9fa 100%); }
+    .services-header { text-align: center; margin-bottom: 2.2rem; }
+    .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .service-card {
+      background: var(--white); border-radius: 1.3rem;
+      padding: 1.6rem 1rem; text-align: center;
+      box-shadow: var(--shadow-sm); border: 2px solid transparent;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    @media (hover: hover) {
+      .service-card:hover { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(0,194,199,0.18); border-color: var(--turquoise); }
+    }
+    .service-icon { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 0.9rem; }
+    .service-card h3 { font-size: clamp(1rem, 3vw, 1.25rem); color: var(--dark); margin-bottom: 0.5rem; }
+    .service-card p  { font-size: clamp(0.78rem, 2.5vw, 0.9rem); color: var(--muted); line-height: 1.55; }
+
+    /* Tarjeta expandida — detalle de servicio */
+    .service-detail {
+      background: var(--white); border-radius: 1.5rem;
+      padding: var(--section-py) 0;
+    }
+    .service-detail:nth-child(even) { background: var(--gray); }
+
+    .detail-inner {
+      display: flex; flex-direction: column; gap: 2rem;
+    }
+    .detail-img { width: 100%; border-radius: 1.3rem; overflow: hidden; box-shadow: var(--shadow-md); }
+    .detail-img img { width: 100%; height: 220px; object-fit: cover; }
+    .detail-text h3 { font-size: clamp(1.5rem, 4vw, 2rem); color: var(--dark); margin-bottom: 0.7rem; }
+    .detail-text p  { font-size: clamp(0.93rem, 3vw, 1rem); color: #4A5568; line-height: 1.8; margin-bottom: 1rem; }
+
+    /* ─── TABLET ≥ 600px ── */
+    @media (min-width: 600px) {
+      .services-grid { grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+    }
+    /* ─── DESKTOP ≥ 768px ── */
+    @media (min-width: 768px) {
+      .services-grid { grid-template-columns: repeat(5, 1fr); }
+      .detail-inner  { flex-direction: row; align-items: center; gap: 3rem; }
+      .detail-img    { flex: 1; }
+      .detail-text   { flex: 1; }
+      .detail-img img { height: 280px; }
+      .service-detail:nth-child(even) .detail-inner { flex-direction: row-reverse; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  🌴 ¡Abiertos todos los días de 9am a 6pm! · <a href="reservas.html">Reserva ahora →</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="logo">🌴 Balneario <span>Safari</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="nosotros.html">Nosotros</a></li>
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="galeria.html">Galería</a></li>
+    <li><a href="reservas.html">Reservas</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+  </ul>
+  <a href="reservas.html" class="nav-cta">🎉 ¡Reserva Ya!</a>
+  <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <span class="section-label" style="background:rgba(255,214,0,0.2);color:var(--yellow)">Servicios</span>
+  <h1>Todo Lo Que <span>Necesitas</span></h1>
+  <p>En un solo lugar, rodeado de naturaleza</p>
+</div>
+
+<!-- SERVICIOS GRID -->
+<section id="servicios">
+  <div class="container">
+    <div class="services-header reveal">
+      <span class="section-label">Lo Que Ofrecemos</span>
+      <h2 class="section-title">Cinco Razones Para<br/><span>No Quedarte en Casa</span></h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon" style="background:linear-gradient(135deg,#00C2C7,#0098a0)">🍹</div>
+        <h3>Bar Tropical</h3>
+        <p>Cócteles artesanales y bebidas para refrescarte al máximo.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon" style="background:linear-gradient(135deg,#FF6B2B,#ff9857)">🍽️</div>
+        <h3>Restaurante</h3>
+        <p>Sabores auténticos con ingredientes frescos y locales.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon" style="background:linear-gradient(135deg,#FFD600,#ffc000)">🍦</div>
+        <h3>Heladería</h3>
+        <p>Helados artesanales de frutas tropicales irresistibles.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon" style="background:linear-gradient(135deg,#6C63FF,#4a43cc)">🚗</div>
+        <h3>Parqueadero</h3>
+        <p>Amplio, seguro y vigilado para tu tranquilidad.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon" style="background:linear-gradient(135deg,#FF4E8C,#cc2060)">🎊</div>
+        <h3>Eventos</h3>
+        <p>Celebra en el escenario más espectacular de La Mesa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DETALLES DE CADA SERVICIO -->
+<div class="service-detail">
+  <div class="container">
+    <div class="detail-inner reveal">
+      <div class="detail-img">
+        <img src="zona.png" alt="Bar tropical Balneario Safari" loading="lazy" />
+      </div>
+      <div class="detail-text">
+        <h3>🍹 Bar Tropical</h3>
+        <p>Nuestro bar es el corazón de la fiesta. Cócteles artesanales preparados con frutas tropicales frescas, bebidas sin alcohol para los más pequeños, y la mejor música para crear el ambiente perfecto. ¡El mojito de mango es una leyenda!</p>
+        <a href="reservas.html" class="btn btn-primary" style="text-decoration:none">Reservar Ahora</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="service-detail">
+  <div class="container">
+    <div class="detail-inner reveal">
+      <div class="detail-img">
+        <img src="zona.png" alt="Restaurante Balneario Safari" loading="lazy" />
+      </div>
+      <div class="detail-text">
+        <h3>🍽️ Restaurante</h3>
+        <p>Sabores auténticos de la región cundinamarquesa, preparados con amor e ingredientes frescos del campo. Bandeja paisa, fritanga, trucha y mucho más. Come bien y descansa mejor — el combo perfecto.</p>
+        <a href="reservas.html" class="btn btn-primary" style="text-decoration:none">Reservar Mesa</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="service-detail">
+  <div class="container">
+    <div class="detail-inner reveal">
+      <div class="detail-img">
+        <img src="pool.png" alt="Heladería Balneario Safari" loading="lazy" />
+      </div>
+      <div class="detail-text">
+        <h3>🍦 Heladería Artesanal</h3>
+        <p>Helados de guanábana, maracuyá, mora de castilla y muchos sabores más. Paletas, malteadas y sorbetes que hacen que el calor del día valga la pena. Los niños los adoran — y los adultos también.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="service-detail">
+  <div class="container">
+    <div class="detail-inner reveal">
+      <div class="detail-img">
+        <img src="pool.png" alt="Parqueadero Balneario Safari" loading="lazy" />
+      </div>
+      <div class="detail-text">
+        <h3>🚗 Parqueadero Seguro</h3>
+        <p>Llega sin preocupaciones. Nuestro amplio parqueadero cuenta con vigilancia las 24 horas, capacidad para vehículos grandes y acceso directo al balneario. Tu carro estará tan tranquilo como tú.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="service-detail">
+  <div class="container">
+    <div class="detail-inner reveal">
+      <div class="detail-img">
+        <img src="zona.png" alt="Eventos Balneario Safari" loading="lazy" />
+      </div>
+      <div class="detail-text">
+        <h3>🎊 Eventos Privados</h3>
+        <p>¿Quieres celebrar algo especial? Cumpleaños, matrimonios, reuniones corporativas o simplemente una reunión épica con amigos — nuestro equipo de eventos se encarga de que todo sea perfecto. ¡Cotiza sin compromiso!</p>
+        <a href="contacto.html" class="btn btn-primary" style="text-decoration:none">Cotizar Evento</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo logo">🌴 Balneario <span>Safari</span></div>
+    <nav class="footer-links">
+      <a href="index.html">Inicio</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="galeria.html">Galería</a>
+      <a href="reservas.html">Reservas</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">© 2026 Balneario Safari · La Mesa, Cundinamarca · Todos los derechos reservados 🌴</div>
+</footer>
+
+<a href="https://wa.me/573000000000" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+<div class="sticky-mobile-cta">
+  <a href="reservas.html" class="smc-reserva">🎉 Reservar</a>
+  <a href="https://wa.me/573000000000" target="_blank" rel="noopener" class="smc-wa">💬 WhatsApp</a>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

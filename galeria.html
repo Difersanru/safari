@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Galería de fotos y videos de Balneario Safari, La Mesa, Cundinamarca." />
+  <title>Galería · Balneario Safari</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── HERO INTERNO ─────────────────────────────────── */
+    .page-hero {
+      background: linear-gradient(160deg,#003f5c 0%,#006b70 55%,#00C2C7 100%);
+      padding: 5rem var(--section-px) 3.5rem;
+      text-align: center; color: var(--white);
+    }
+    .page-hero h1 { font-size: clamp(2rem,7vw,3.8rem); }
+    .page-hero h1 span { color: var(--yellow); }
+    .page-hero p { font-size: clamp(0.95rem,3vw,1.1rem); opacity: 0.88; margin-top: 0.6rem; }
+
+    /* ── GALERÍA ──────────────────────────────────────── */
+    #galeria { padding: var(--section-py) 0; background: var(--white); }
+    .gallery-header { text-align: center; margin-bottom: 2rem; }
+
+    /* Mobile: columna única */
+    .gallery-grid { display: flex; flex-direction: column; gap: 0.85rem; }
+
+    .gallery-item {
+      border-radius: 1rem; overflow: hidden;
+      position: relative; aspect-ratio: 16/9;
+    }
+    .gallery-item img,
+    .gallery-item video { width: 100%; height: 100%; object-fit: cover; }
+
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg,transparent 55%,rgba(0,20,25,0.62) 100%);
+      display: flex; align-items: flex-end; padding: 0.8rem 0.9rem; pointer-events: none;
+    }
+    .gallery-overlay span { color: var(--white); font-weight: 800; font-size: 0.88rem; }
+
+    @media (hover: hover) {
+      .gallery-item img, .gallery-item video { transition: transform 0.4s; }
+      .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.04); }
+    }
+
+    /* ─── TABLET ≥ 600px ── */
+    @media (min-width: 600px) {
+      .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .gallery-item { aspect-ratio: 4/3; }
+      .gallery-item.wide { grid-column: span 2; aspect-ratio: 16/7; }
+    }
+    /* ─── DESKTOP ≥ 768px ── */
+    @media (min-width: 768px) {
+      .gallery-grid { grid-template-columns: repeat(3,1fr); grid-template-rows: auto auto; gap: 1.2rem; }
+      .gallery-item.tall { grid-row: span 2; aspect-ratio: auto; }
+      .gallery-item.tall img { height: 100%; min-height: 440px; }
+      .gallery-item:not(.wide):not(.tall) { aspect-ratio: 4/3; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  🌴 ¡Abiertos todos los días de 8am a 8pm! · <a href="reservas.html">Reserva ahora →</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="logo">🌴 Balneario <span>Safari</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="nosotros.html">Nosotros</a></li>
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="galeria.html">Galería</a></li>
+    <li><a href="reservas.html">Reservas</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+  </ul>
+  <a href="reservas.html" class="nav-cta">🎉 ¡Reserva Ya!</a>
+  <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <span class="section-label" style="background:rgba(255,214,0,0.2);color:var(--yellow)">Galería</span>
+  <h1>Mira el <span>Paraíso</span></h1>
+  <p>Imágenes y videos reales del lugar que te espera</p>
+</div>
+
+<!-- GALERÍA -->
+<section id="galeria">
+  <div class="container">
+    <div class="gallery-header reveal">
+      <span class="section-label">Fotos & Videos</span>
+      <h2 class="section-title">Mira Con Tus Propios Ojos<br/><span>El Paraíso que Te Espera</span></h2>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item tall reveal">
+        <img src="pool.png" alt="Piscina principal Balneario Safari" loading="lazy" />
+        <div class="gallery-overlay"><span>🏊 Piscina Principal</span></div>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="zona.png" alt="Zona de eventos cubierta" loading="lazy" />
+        <div class="gallery-overlay"><span>🎊 Zona de Eventos</span></div>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="pool.png" alt="Vista aérea de la piscina" loading="lazy" />
+        <div class="gallery-overlay"><span>🌿 Vista Natural</span></div>
+      </div>
+      <div class="gallery-item wide reveal">
+        <video autoplay muted loop playsinline aria-label="Video Balneario Safari">
+          <source src="video.mp4" type="video/mp4" />
+        </video>
+        <div class="gallery-overlay"><span>🎬 Balneario Safari en Acción</span></div>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="zona.png" alt="Restaurante al aire libre" loading="lazy" />
+        <div class="gallery-overlay"><span>🍽️ Restaurante</span></div>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="pool.png" alt="Área de descanso piscina" loading="lazy" />
+        <div class="gallery-overlay"><span>☀️ Área de Descanso</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo logo">🌴 Balneario <span>Safari</span></div>
+    <nav class="footer-links">
+      <a href="index.html">Inicio</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="galeria.html">Galería</a>
+      <a href="reservas.html">Reservas</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">© 2026 Balneario Safari · La Mesa, Cundinamarca · Todos los derechos reservados 🌴</div>
+</footer>
+
+<a href="https://wa.me/573000000000" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+<div class="sticky-mobile-cta">
+  <a href="reservas.html" class="smc-reserva">🎉 Reservar</a>
+  <a href="https://wa.me/573000000000" target="_blank" rel="noopener" class="smc-wa">💬 WhatsApp</a>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
