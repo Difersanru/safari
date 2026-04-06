@@ -61,14 +61,34 @@
       padding: 6rem var(--section-px) 5rem;
     }
 
-    /* Video de fondo — carga eager solo en desktop,
-       lazy en móvil se controla vía JS al final */
+    /* ── IMAGEN DE FONDO EN MÓVIL ──────────────────────────
+       En pantallas < 768px se oculta el video y se muestra
+       la imagen estática (pool1.png) como fondo del hero.
+       Esto evita que el móvil descargue un archivo pesado
+       y mejora drásticamente el tiempo de carga.
+    ─────────────────────────────────────────────────────── */
+    .hero-bg-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      /* Visible solo en móvil; se oculta en desktop */
+      display: block;
+    }
+
+    /* VIDEO — oculto en móvil, visible desde 768px */
     .hero-bg-video {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
       z-index: 0;
-      /* poster = primera imagen visible antes de que cargue el video */
+      display: none; /* oculto en móvil por defecto */
+    }
+
+    /* A partir de tablet/desktop → mostrar video, ocultar imagen */
+    @media (min-width: 768px) {
+      .hero-bg-video { display: block; }
+      .hero-bg-img   { display: none;  }
     }
 
     /* Overlay semitransparente sobre el video para legibilidad */
@@ -394,17 +414,32 @@
   <div class="bubble b2" aria-hidden="true"></div>
   <div class="bubble b3" aria-hidden="true"></div>
 
-  <!-- VIDEO DE FONDO: usa pool4.png como poster/fallback -->
+  <!-- IMAGEN DE FONDO — solo visible en móvil (< 768px)
+       Usa pool1.png: la piscina con tobogán y naturaleza,
+       la foto más impactante del lugar. loading="eager"
+       porque es el elemento visual principal en móvil. -->
+  <img
+    class="hero-bg-img"
+    src="pool1.png"
+    alt=""
+    aria-hidden="true"
+    loading="eager"
+    fetchpriority="high"
+    width="900" height="1200"
+  />
+
+  <!-- VIDEO DE FONDO — solo visible en desktop (≥ 768px)
+       preload="none" evita que el móvil descargue el video
+       aunque el elemento esté en el DOM.
+       JS lo activa con .load() solo cuando detecta desktop. -->
   <video
     class="hero-bg-video"
     autoplay muted loop playsinline
     poster="pool1.png"
     aria-hidden="true"
-    preload="auto"
+    preload="none"
   >
-    <!-- Prioridad: video subido por el usuario -->
     <source src="video.mp4" type="video/mp4" />
-    <!-- Si el video no carga, se ve el poster (pool1.png) -->
   </video>
 
   <!-- Overlay oscuro para contraste del texto -->
@@ -788,13 +823,34 @@
     }, { threshold: 0.2 }).observe(ctaFinal);
   }
 
-  /* ── Rendimiento: pausa el video en móvil si no está
-     visible (ahorra batería y datos) ─────────────────── */
+  /* ── Video hero: solo carga y reproduce en desktop ────
+     En móvil (< 768px) el video tiene display:none y
+     preload="none", así que nunca descarga. En desktop
+     lo cargamos programáticamente para máximo control.
+  ─────────────────────────────────────────────────────── */
   const heroVideo = document.querySelector('.hero-bg-video');
   if (heroVideo) {
+    const loadAndPlayVideo = () => {
+      /* Si el CSS lo tiene visible (desktop) y aún no cargó */
+      if (window.getComputedStyle(heroVideo).display !== 'none'
+          && heroVideo.readyState === 0) {
+        heroVideo.load(); /* dispara la descarga */
+      }
+    };
+
+    /* Intentar al cargar la página */
+    loadAndPlayVideo();
+
+    /* También reaccionar si cambia el tamaño de ventana
+       (ej: rotar tablet de portrait a landscape) */
+    window.addEventListener('resize', loadAndPlayVideo, { passive: true });
+
+    /* Pausa cuando el hero sale del viewport (ahorra batería) */
     new IntersectionObserver(entries => {
       entries.forEach(e => {
-        e.isIntersecting ? heroVideo.play() : heroVideo.pause();
+        if (window.getComputedStyle(heroVideo).display !== 'none') {
+          e.isIntersecting ? heroVideo.play().catch(()=>{}) : heroVideo.pause();
+        }
       });
     }, { threshold: 0 }).observe(heroVideo);
   }
@@ -802,4 +858,3 @@
 
 </body>
 </html>
-
