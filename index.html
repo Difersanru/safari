@@ -261,7 +261,43 @@
     .serv-cta { text-align: center; margin-top: 2rem; }
 
     /* ═══════════════════════════════════════════════════════
-       SECCIÓN "¿POR QUÉ ELEGIRNOS?" — beneficios con ícono
+       SECCIÓN CÓMO LLEGAR — mapa + cards de info
+       Reutiliza los estilos .contact-card de style.css global
+       y añade el layout propio de esta sección en el index.
+    ═══════════════════════════════════════════════════════ */
+    #como-llegar {
+      padding: var(--section-py) 0;
+      background: var(--gray);
+    }
+    .llegar-header {
+      text-align: center; margin-bottom: 2.2rem;
+    }
+    .llegar-grid {
+      display: flex; flex-direction: column; gap: 1.4rem;
+    }
+    .llegar-info {
+      display: flex; flex-direction: column; gap: 0.9rem;
+    }
+    /* Reutiliza .map-container de contacto — mismos estilos */
+    #como-llegar .map-container {
+      border-radius: 1.4rem; overflow: hidden;
+      box-shadow: var(--shadow-md); height: 260px;
+    }
+    #como-llegar .map-container iframe {
+      width: 100%; height: 100%; border: none; display: block;
+    }
+    /* Desktop: grid de dos columnas igual que contacto.html */
+    @media (min-width: 768px) {
+      .llegar-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 2.5rem;
+        align-items: start;
+      }
+      #como-llegar .map-container { height: 420px; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
        NUEVA SECCIÓN: refuerza la propuesta de valor única
        del lugar antes de llegar al CTA de reservas.
     ═══════════════════════════════════════════════════════ */
@@ -735,6 +771,82 @@
 
     </div>
 
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     CÓMO LLEGAR — sección compacta igual a contacto.html
+══════════════════════════════════════════════════════════ -->
+<section id="como-llegar" aria-labelledby="llegar-titulo">
+  <div class="container">
+
+    <div class="llegar-header reveal">
+      <span class="section-label">Encuéntranos</span>
+      <h2 class="section-title" id="llegar-titulo">
+        ¿Cómo Llegar a<br/><span>Nuestro Paraíso?</span>
+      </h2>
+      <p style="color:var(--muted);max-width:500px;margin:0.5rem auto 0;font-size:0.95rem;line-height:1.6;">
+        Estamos en Mesitas del Colegio — Sector el Triunfo, Cundinamarca. ¡A solo 1 hora de Bogotá!
+      </p>
+    </div>
+
+    <div class="llegar-grid">
+
+      <!-- Cards de información de contacto -->
+      <div class="llegar-info reveal">
+
+        <div class="contact-card">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Dirección</h4>
+            <p>Mesitas del Colegio — Sector el Triunfo, Cundinamarca, Colombia</p>
+          </div>
+        </div>
+
+        <a href="tel:+573102562717" class="contact-card contact-card-link">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Teléfono / WhatsApp</h4>
+            <p>+57 310 256 2717</p>
+          </div>
+        </a>
+
+        <a href="mailto:playasafari7@gmail.com" class="contact-card contact-card-link">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <h4>Correo Electrónico</h4>
+            <p>playasafari7@gmail.com</p>
+          </div>
+        </a>
+
+        <div class="contact-card">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <h4>Horario de Atención</h4>
+            <p>Lunes a Domingo · 9:00 am – 6:00 pm</p>
+          </div>
+        </div>
+
+        <!-- Enlace a la página de contacto completa -->
+        <a href="contacto.html" class="btn btn-primary"
+           style="text-decoration:none;margin-top:0.5rem;display:inline-block">
+          Ver Info Completa & Redes →
+        </a>
+
+      </div>
+
+      <!-- Mapa de Google Maps (mismo iframe que contacto.html) -->
+      <div class="map-container reveal">
+        <iframe
+          title="Ubicación Balneario Safari en Mesitas del Colegio"
+          src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3977.2570187705387!2d-74.46663152502158!3d4.547706195426803!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNMKwMzInNTEuNyJOIDc0wrAyNyc1MC42Ilc!5e0!3m2!1ses!2sco!4v1775055983137!5m2!1ses!2sco"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+    </div>
   </div>
 </section>
 
