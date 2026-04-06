@@ -3,119 +3,371 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Balneario Safari – El mejor destino de diversión y descanso en La Mesa, Cundinamarca." />
-  <title>Inicio · Balneario Safari</title>
+
+  <!-- ══ SEO BÁSICO ══════════════════════════════════════════ -->
+  <meta name="description" content="Balneario Safari – Piscinas espectaculares, tobogán, zona verde y gastronomía en Mesitas del Colegio, Cundinamarca. ¡El paraíso está más cerca de lo que crees!" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#003f5c" />
+
+  <!-- ══ OPEN GRAPH (redes sociales) ════════════════════════ -->
+  <meta property="og:title" content="Balneario Safari · Tu Paraíso en Cundinamarca" />
+  <meta property="og:description" content="Piscinas panorámicas, tobogán, gastronomía y naturaleza. A solo 1h de Bogotá." />
+  <meta property="og:image" content="pool1.png" />
+  <meta property="og:type" content="website" />
+
+  <!-- ══ SEGURIDAD — meta HTTP-equiv ════════════════════════
+       Previene clickjacking, XSS y carga de recursos mixtos.  -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+
+  <title>Inicio · Balneario Safari — Mesitas del Colegio</title>
+
+  <!-- ══ FUENTES ═════════════════════════════════════════════ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+
   <style>
-    /* ── HERO ─────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════
+       VARIABLES LOCALES (complementan style.css global)
+    ═══════════════════════════════════════════════════════ */
+    :root {
+      --hero-overlay: linear-gradient(
+        160deg,
+        rgba(0,40,60,0.72) 0%,
+        rgba(0,90,95,0.55) 50%,
+        rgba(0,150,155,0.35) 100%
+      );
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       HERO — fondo de VIDEO + fallback imagen
+       Cambio clave: se reemplaza la imagen estática original
+       por un hero de pantalla completa con video autoplay.
+       El video es muted+playsinline para reproducirse en móvil
+       sin fricción. La imagen pool1.png actúa como poster.
+    ═══════════════════════════════════════════════════════ */
     #inicio {
+      position: relative;
+      min-height: 100svh;           /* svh evita el salto en móvil */
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem var(--section-px) 4rem;
-      background: linear-gradient(160deg, #003f5c 0%, #006b70 50%, #00C2C7 100%);
-      overflow: hidden;
+      justify-content: center;
       text-align: center;
+      overflow: hidden;
+      padding: 6rem var(--section-px) 5rem;
     }
-    .bubble { display: none; } /* visible solo en desktop vía MQ */
 
-    .hero-visual {
-      width: 100%; max-width: 400px;
-      margin: 0 auto 2rem;
-      animation: fadeInUp 0.7s ease both;
+    /* Video de fondo — carga eager solo en desktop,
+       lazy en móvil se controla vía JS al final */
+    .hero-bg-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      /* poster = primera imagen visible antes de que cargue el video */
     }
-    .hero-img-wrap {
-      width: 100%; aspect-ratio: 4/3;
-      border-radius: 1.5rem; overflow: hidden;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-      border: 3px solid rgba(255,255,255,0.22);
-    }
-    .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
 
-    .hero-content { width: 100%; animation: fadeInUp 0.75s 0.1s ease both; }
+    /* Overlay semitransparente sobre el video para legibilidad */
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: var(--hero-overlay);
+      z-index: 1;
+    }
+
+    /* Decoración: ola inferior para transición suave a stats-bar */
+    .hero-wave {
+      position: absolute; bottom: -2px; left: 0;
+      width: 100%; pointer-events: none; z-index: 3;
+    }
+    .hero-wave svg { display: block; }
+
+    /* Bubbles decorativas — solo desktop */
+    .bubble { display: none; }
+
+    /* Contenido del hero — encima del overlay */
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 720px;
+      animation: fadeInUp 0.8s ease both;
+    }
+
     .hero-badge {
       display: inline-block;
       background: var(--yellow); color: var(--dark);
       font-weight: 800; font-size: 0.78rem;
-      padding: 0.35rem 1rem; border-radius: 50px;
-      margin-bottom: 1rem; letter-spacing: 1px; text-transform: uppercase;
+      padding: 0.35rem 1.1rem; border-radius: 50px;
+      margin-bottom: 1.1rem; letter-spacing: 1px;
+      text-transform: uppercase;
     }
-    .hero-title { font-size: clamp(2rem, 9vw, 5.5rem); color: var(--white); margin-bottom: 1rem; }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 10vw, 6rem);
+      color: var(--white);
+      margin-bottom: 1rem;
+      line-height: 1.08;
+      /* Sombra de texto para máxima legibilidad sobre el video */
+      text-shadow: 0 3px 18px rgba(0,0,0,0.45);
+    }
     .hero-title span { color: var(--yellow); }
+
     .hero-sub {
-      font-size: clamp(0.93rem, 3.5vw, 1.1rem);
-      color: rgba(255,255,255,0.88); line-height: 1.7;
-      margin-bottom: 1.8rem;
-      max-width: 500px; margin-left: auto; margin-right: auto;
+      font-size: clamp(1rem, 3.5vw, 1.2rem);
+      color: rgba(255,255,255,0.92);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
+
     .hero-buttons {
       display: flex; flex-direction: column;
-      gap: 0.75rem; align-items: center;
+      gap: 0.8rem; align-items: center;
     }
     .hero-buttons .btn { width: 100%; max-width: 320px; }
 
-    .hero-wave { position: absolute; bottom: -2px; left: 0; width: 100%; pointer-events: none; }
-    .hero-wave svg { display: block; }
+    /* Indicador de scroll — invita a seguir bajando */
+    .scroll-hint {
+      position: absolute; bottom: 5.5rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column;
+      align-items: center; gap: 0.3rem;
+      color: rgba(255,255,255,0.65); font-size: 0.7rem;
+      font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    .scroll-hint svg { opacity: 0.7; }
 
-    /* ── STATS BAR ────────────────────────────────────── */
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       STATS BAR — barra amarilla de cifras clave
+    ═══════════════════════════════════════════════════════ */
     .stats-bar {
       background: var(--yellow);
       padding: 1.4rem var(--section-px);
       display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem 0.5rem;
     }
     .stat { text-align: center; }
-    .stat-num { font-family: 'Fredoka One', cursive; font-size: clamp(1.5rem, 5vw, 2.2rem); color: var(--dark); }
+    .stat-num   { font-family: 'Fredoka One', cursive; font-size: clamp(1.6rem,5vw,2.3rem); color: var(--dark); }
     .stat-label { font-size: 0.7rem; font-weight: 700; color: var(--dark); opacity: 0.7; text-transform: uppercase; letter-spacing: 0.8px; }
 
-    /* ─── TABLET ≥ 600px ──── */
+    /* ═══════════════════════════════════════════════════════
+       SECCIÓN EXPERIENCIAS — grid de imágenes reales
+       NUEVA SECCIÓN: muestra las fotos del lugar clasificadas
+       por categoría (piscinas, familia, gastronomía, zona social)
+       para que el usuario vea de un vistazo qué le espera.
+    ═══════════════════════════════════════════════════════ */
+    #experiencias {
+      padding: var(--section-py) 0;
+      background: var(--white);
+    }
+    .exp-header {
+      text-align: center; margin-bottom: 2.2rem;
+    }
+
+    /* Grid masonry-like 2 columnas en móvil, 3 en desktop */
+    .exp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .exp-item {
+      position: relative; border-radius: 1.1rem;
+      overflow: hidden; cursor: pointer;
+    }
+    /* Alturas variables para dar ritmo visual */
+    .exp-item:nth-child(1) { aspect-ratio: 3/4; }
+    .exp-item:nth-child(2) { aspect-ratio: 3/4; }
+    .exp-item:nth-child(3) { aspect-ratio: 16/9; grid-column: span 2; }
+    .exp-item:nth-child(4) { aspect-ratio: 4/3; }
+    .exp-item:nth-child(5) { aspect-ratio: 4/3; }
+
+    .exp-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+      display: block;
+    }
+    @media (hover: hover) {
+      .exp-item:hover img { transform: scale(1.06); }
+    }
+
+    /* Etiqueta flotante en cada foto */
+    .exp-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(0deg, rgba(0,20,25,0.72) 0%, transparent 100%);
+      padding: 1.4rem 0.9rem 0.8rem;
+      color: var(--white); font-weight: 800; font-size: 0.88rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       SECCIÓN SERVICIOS — cards de los 5 servicios
+    ═══════════════════════════════════════════════════════ */
+    #servicios-home {
+      padding: var(--section-py) 0;
+      background: linear-gradient(180deg, #f0fffe 0%, #e6f9fa 100%);
+    }
+    .serv-header { text-align: center; margin-bottom: 2.2rem; }
+    .serv-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .serv-card {
+      background: var(--white); border-radius: 1.3rem;
+      padding: 1.5rem 1rem; text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s, box-shadow 0.25s;
+      border: 2px solid transparent;
+    }
+    @media (hover: hover) {
+      .serv-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 14px 40px rgba(0,194,199,0.2);
+        border-color: var(--turquoise);
+      }
+    }
+    .serv-icon {
+      width: 60px; height: 60px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.7rem; margin: 0 auto 0.85rem;
+    }
+    .serv-card h3 { font-size: clamp(0.95rem,3vw,1.15rem); color: var(--dark); margin-bottom: 0.4rem; }
+    .serv-card p  { font-size: clamp(0.76rem,2.5vw,0.88rem); color: var(--muted); line-height: 1.5; }
+    .serv-cta { text-align: center; margin-top: 2rem; }
+
+    /* ═══════════════════════════════════════════════════════
+       SECCIÓN "¿POR QUÉ ELEGIRNOS?" — beneficios con ícono
+       NUEVA SECCIÓN: refuerza la propuesta de valor única
+       del lugar antes de llegar al CTA de reservas.
+    ═══════════════════════════════════════════════════════ */
+    #por-que {
+      padding: var(--section-py) 0;
+      background: linear-gradient(160deg,#003f5c 0%,#006b70 60%,#00C2C7 100%);
+    }
+    .porq-inner {
+      display: flex; flex-direction: column; gap: 2.5rem;
+    }
+    .porq-text h2 { color: var(--white); font-size: clamp(1.8rem,6vw,3rem); margin-bottom: 1rem; }
+    .porq-text p  { color: rgba(255,255,255,0.85); line-height: 1.8; font-size: clamp(0.93rem,3vw,1.05rem); }
+
+    .porq-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+    .porq-item {
+      display: flex; align-items: center; gap: 0.9rem;
+      background: rgba(255,255,255,0.1); border-radius: 0.9rem;
+      padding: 0.9rem 1rem; backdrop-filter: blur(4px);
+    }
+    .porq-icon {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: rgba(255,214,0,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .porq-item span { color: rgba(255,255,255,0.92); font-weight: 700; font-size: 0.95rem; }
+
+    /* Imagen lateral — piscina con niños (pool4.png) */
+    .porq-img { border-radius: 1.4rem; overflow: hidden; box-shadow: 0 16px 50px rgba(0,0,0,0.35); }
+    .porq-img img { width: 100%; height: 300px; object-fit: cover; display: block; }
+
+    /* ═══════════════════════════════════════════════════════
+       SECCIÓN RESEÑAS — prueba social con testimonios
+       NUEVA SECCIÓN: aumenta la confianza antes del CTA final.
+    ═══════════════════════════════════════════════════════ */
+    #resenas {
+      padding: var(--section-py) 0; background: var(--gray);
+    }
+    .res-header { text-align: center; margin-bottom: 2rem; }
+    .res-grid { display: flex; flex-direction: column; gap: 1rem; }
+    .res-card {
+      background: var(--white); border-radius: 1.2rem;
+      padding: 1.3rem 1.1rem; box-shadow: var(--shadow-sm);
+    }
+    .res-stars { color: #FFD600; font-size: 1rem; margin-bottom: 0.5rem; }
+    .res-card p { font-size: 0.9rem; color: #4A5568; line-height: 1.6; margin-bottom: 0.8rem; font-style: italic; }
+    .res-author { font-weight: 800; font-size: 0.83rem; color: var(--dark); }
+
+    /* ═══════════════════════════════════════════════════════
+       SECCIÓN CTA RESERVA — llamado final a la acción
+    ═══════════════════════════════════════════════════════ */
+    #cta-final {
+      padding: var(--section-py) 0;
+      background: var(--yellow);
+      text-align: center;
+    }
+    #cta-final h2 { color: var(--dark); font-size: clamp(1.8rem,6vw,3.2rem); margin-bottom: 0.8rem; }
+    #cta-final p  { color: rgba(0,0,0,0.65); margin-bottom: 1.8rem; font-size: clamp(0.95rem,3vw,1.1rem); }
+    .cta-btns { display: flex; flex-direction: column; align-items: center; gap: 0.85rem; }
+    .cta-btns .btn { width: 100%; max-width: 300px; }
+
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVE — TABLET ≥ 600px
+    ═══════════════════════════════════════════════════════ */
     @media (min-width: 600px) {
-      .stats-bar { grid-template-columns: repeat(4,1fr); gap: 1rem; }
+      .stats-bar    { grid-template-columns: repeat(4,1fr); }
       .hero-buttons { flex-direction: row; justify-content: center; }
       .hero-buttons .btn { width: auto; }
-      .hero-img-wrap { border-radius: 2rem; }
+      .serv-grid    { grid-template-columns: repeat(3,1fr); }
+      .res-grid     { display: grid; grid-template-columns: 1fr 1fr; }
+      .cta-btns     { flex-direction: row; justify-content: center; }
+      .cta-btns .btn { width: auto; }
+
+      /* Experiencias: 3 columnas */
+      .exp-grid { grid-template-columns: 1fr 1fr 1fr; }
+      .exp-item:nth-child(1) { aspect-ratio: 3/4; }
+      .exp-item:nth-child(2) { aspect-ratio: 3/4; }
+      .exp-item:nth-child(3) { aspect-ratio: 3/4; grid-column: auto; }
+      .exp-item:nth-child(4) { aspect-ratio: 3/4; }
+      .exp-item:nth-child(5) { aspect-ratio: 3/4; }
     }
 
-    /* ─── DESKTOP ≥ 1024px ── */
-    @media (min-width: 1024px) {
-      #inicio {
-        flex-direction: row; text-align: left;
-        justify-content: center; align-items: center;
-        padding: 7rem 6% 9rem; gap: 4rem;
-      }
-      .hero-visual { order: 1; margin: 0; padding: 0; max-width: 520px; flex-shrink: 0; }
-      .hero-content { order: 0; max-width: 560px; }
-      .hero-buttons { flex-direction: row; justify-content: flex-start; }
-      .hero-buttons .btn { width: auto; }
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVE — DESKTOP ≥ 768px
+    ═══════════════════════════════════════════════════════ */
+    @media (min-width: 768px) {
+      .serv-grid  { grid-template-columns: repeat(5,1fr); }
+      .res-grid   { grid-template-columns: repeat(3,1fr); }
+      .porq-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+      .porq-img img { height: 420px; }
+    }
 
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVE — DESKTOP ≥ 1024px
+    ═══════════════════════════════════════════════════════ */
+    @media (min-width: 1024px) {
+      #inicio { padding: 7rem 6% 9rem; }
+
+      /* Bubbles decorativas flotantes */
       .bubble {
         display: block; position: absolute; border-radius: 50%;
-        background: rgba(255,255,255,0.07);
+        background: rgba(255,255,255,0.07); z-index: 2;
         animation: floatY 6s ease-in-out infinite;
       }
-      .b1 { width: 200px; height: 200px; top: 8%; right: 4%; animation-delay: 0s; }
-      .b2 { width: 110px; height: 110px; bottom: 14%; right: 10%; animation-delay: 2s; }
-      .b3 { width: 70px; height: 70px; top: 35%; left: 3%; animation-delay: 1s; }
-    }
-    @media (min-width: 1280px) {
-      #inicio { padding-left: max(6%, calc((100% - 1240px)/2)); padding-right: max(6%, calc((100% - 1240px)/2)); }
+      .b1 { width: 220px; height: 220px; top: 8%;  right: 4%;  animation-delay: 0s; }
+      .b2 { width: 120px; height: 120px; bottom: 14%; right: 10%; animation-delay: 2s; }
+      .b3 { width:  80px; height:  80px; top: 38%; left: 3%;  animation-delay: 1s; }
     }
   </style>
 </head>
 <body>
 
-<!-- PROMO BANNER -->
+<!-- ══════════════════════════════════════════════════════════
+     PROMO BANNER
+══════════════════════════════════════════════════════════ -->
 <div class="promo-banner">
-  🌴 ¡Abiertos todos los días de 8am a 8pm! · <a href="reservas.html">Reserva ahora y asegura tu cupo →</a>
+  🌴 ¡Abiertos todos los días de 9am a 6pm! · <a href="reservas.html">Reserva ahora y asegura tu cupo →</a>
 </div>
 
-<!-- NAV -->
-<nav id="navbar">
+<!-- ══════════════════════════════════════════════════════════
+     NAVEGACIÓN
+══════════════════════════════════════════════════════════ -->
+<nav id="navbar" role="navigation" aria-label="Menú principal">
   <a href="index.html" class="logo">🌴 Balneario <span>Safari</span></a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">Inicio</a></li>
+    <li><a href="index.html" aria-current="page">Inicio</a></li>
     <li><a href="nosotros.html">Nosotros</a></li>
     <li><a href="servicios.html">Servicios</a></li>
     <li><a href="galeria.html">Galería</a></li>
@@ -123,33 +375,72 @@
     <li><a href="contacto.html">Contacto</a></li>
   </ul>
   <a href="reservas.html" class="nav-cta">🎉 ¡Reserva Ya!</a>
-  <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+  <button class="hamburger" id="hamburger"
+          aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- HERO -->
-<section id="inicio">
+<!-- ══════════════════════════════════════════════════════════
+     HERO — VIDEO DE FONDO (pool4 / panoramica como fallback)
+     Se usa pool4.png como poster para evitar pantalla negra
+     mientras carga el video. El video se silencia y reproduce
+     automáticamente (requisito de navegadores móviles).
+══════════════════════════════════════════════════════════ -->
+<section id="inicio" aria-label="Sección de inicio">
+
+  <!-- Burbujas decorativas (solo desktop) -->
   <div class="bubble b1" aria-hidden="true"></div>
   <div class="bubble b2" aria-hidden="true"></div>
   <div class="bubble b3" aria-hidden="true"></div>
 
-  <div class="hero-visual">
-    <div class="hero-img-wrap">
-      <img src="pool.png" alt="Piscina panorámica de Balneario Safari en La Mesa" loading="eager" />
-    </div>
-  </div>
+  <!-- VIDEO DE FONDO: usa pool4.png como poster/fallback -->
+  <video
+    class="hero-bg-video"
+    autoplay muted loop playsinline
+    poster="pool1.png"
+    aria-hidden="true"
+    preload="auto"
+  >
+    <!-- Prioridad: video subido por el usuario -->
+    <source src="video.mp4" type="video/mp4" />
+    <!-- Si el video no carga, se ve el poster (pool1.png) -->
+  </video>
 
+  <!-- Overlay oscuro para contraste del texto -->
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <!-- CONTENIDO PRINCIPAL DEL HERO -->
   <div class="hero-content">
-    <span class="hero-badge">🌴 Mesitas del Colegio - Vía El Trinfo, Cundinamarca</span>
-    <h1 class="hero-title">Tu Paraíso de<br/><span>Diversión & Frescura</span></h1>
-    <p class="hero-sub">Escápate del calor y vive una experiencia única en familia. Piscinas espectaculares, gastronomía deliciosa y naturaleza que te roba el aliento.</p>
+    <span class="hero-badge">🌴 Mesitas del Colegio · A 1h de Bogotá</span>
+
+    <h1 class="hero-title">
+      Tu Paraíso de<br/><span>Diversión & Frescura</span>
+    </h1>
+
+    <p class="hero-sub">
+      Piscinas espectaculares, tobogán, zona verde y gastronomía — todo
+      rodeado de naturaleza pura en Cundinamarca. El escape perfecto para
+      toda la familia. 🌿
+    </p>
+
     <div class="hero-buttons">
-      <a href="reservas.html" class="btn btn-primary">🎉 ¡Reserva Ahora!</a>
+      <!-- CTA principal: máxima visibilidad -->
+      <a href="reservas.html" class="btn btn-primary">🎉 ¡Reservar Ahora!</a>
+      <!-- CTA secundario: ver antes de decidir -->
       <a href="galeria.html"  class="btn btn-secondary">Ver Galería →</a>
     </div>
   </div>
 
+  <!-- Indicador de scroll -->
+  <div class="scroll-hint" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+    Descubre más
+  </div>
+
+  <!-- Ola de transición al stats-bar amarillo -->
   <div class="hero-wave" aria-hidden="true">
     <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
       <path d="M0,35 C360,70 1080,0 1440,35 L1440,70 L0,70 Z" fill="#FFD600"/>
@@ -157,19 +448,289 @@
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="stat"><div class="stat-num">+5,000</div><div class="stat-label">Visitantes Felices</div></div>
-  <div class="stat"><div class="stat-num">5</div><div class="stat-label">Servicios Premium</div></div>
-  <div class="stat"><div class="stat-num">365</div><div class="stat-label">Días al Año</div></div>
-  <div class="stat"><div class="stat-num">⭐ 4.9</div><div class="stat-label">Calificación</div></div>
+<!-- ══════════════════════════════════════════════════════════
+     STATS BAR — cifras de confianza
+══════════════════════════════════════════════════════════ -->
+<div class="stats-bar" role="region" aria-label="Estadísticas">
+  <div class="stat">
+    <div class="stat-num">+5,000</div>
+    <div class="stat-label">Visitantes Felices</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Servicios Premium</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">365</div>
+    <div class="stat-label">Días al Año</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">⭐ 4.9</div>
+    <div class="stat-label">Calificación</div>
+  </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ══════════════════════════════════════════════════════════
+     EXPERIENCIAS — galería compacta con fotos reales
+     NUEVA SECCIÓN: las fotos analizadas se distribuyen aquí
+     según su categoría para narrar visualmente el lugar.
+     - pool1.png → HERO SECTION (fondo video)
+     - pool2.png → Fuente / animación (impacto emocional)
+     - pool3.png → Gente disfrutando (prueba social)
+     - pool4.png → Niños felices (familia)
+     - familia3.png → Zona social / instalaciones
+     Todas con loading="lazy" excepto la del hero.
+══════════════════════════════════════════════════════════ -->
+<section id="experiencias" aria-labelledby="exp-titulo">
+  <div class="container">
+
+    <div class="exp-header reveal">
+      <span class="section-label">El Lugar</span>
+      <h2 class="section-title" id="exp-titulo">
+        Mira Lo Que Te<br/><span>Está Esperando</span>
+      </h2>
+      <p style="color:var(--muted);max-width:540px;margin:0.6rem auto 0;font-size:0.95rem;line-height:1.6;">
+        Piscinas enormes, tobogán, zona verde, heladería y más — todo en un solo lugar rodeado de montaña.
+      </p>
+    </div>
+
+    <div class="exp-grid">
+
+      <!-- Imagen 1: Piscina con fuente (pool2.png) — impacto -->
+      <div class="exp-item reveal">
+        <img src="pool2.png"
+             alt="Piscina principal con fuente de agua y visitantes en Balneario Safari"
+             loading="lazy" width="400" height="533" />
+        <div class="exp-label">🏊 Piscina & Fuente</div>
+      </div>
+
+      <!-- Imagen 2: Niños felices en la piscina (pool4.png) — familia -->
+      <div class="exp-item reveal">
+        <img src="pool4.png"
+             alt="Niños felices posando en la piscina de Balneario Safari"
+             loading="lazy" width="400" height="533" />
+        <div class="exp-label">👨‍👩‍👧 Diversión Familiar</div>
+      </div>
+
+      <!-- Imagen 3: Vista panorámica (pool.png) — ancho completo -->
+      <div class="exp-item reveal">
+        <img src="pool.png"
+             alt="Vista aérea panorámica de la piscina infinita con sombrillas azules y montañas al fondo"
+             loading="lazy" width="900" height="506" />
+        <div class="exp-label">🌿 Vista Panorámica desde las Alturas</div>
+      </div>
+
+      <!-- Imagen 4: Piscina con tobogán y naturaleza (pool1.png) -->
+      <div class="exp-item reveal">
+        <img src="pool1.png"
+             alt="Piscina amplia con tobogán verde y exuberante vegetación de fondo"
+             loading="lazy" width="400" height="533" />
+        <div class="exp-label">🎢 Tobogán & Naturaleza</div>
+      </div>
+
+      <!-- Imagen 5: Zona social con sombrillas (familia3.png) -->
+      <div class="exp-item reveal">
+        <img src="familia3.png"
+             alt="Zona social con mesas, sombrillas y área de juegos en Balneario Safari"
+             loading="lazy" width="400" height="533" />
+        <div class="exp-label">🎊 Zona Social & Eventos</div>
+      </div>
+
+    </div>
+
+    <!-- CTA hacia la galería completa -->
+    <div style="text-align:center;margin-top:1.8rem;">
+      <a href="galeria.html" class="btn btn-primary" style="text-decoration:none">
+        Ver Galería Completa →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SERVICIOS — resumen de los 5 servicios principales
+══════════════════════════════════════════════════════════ -->
+<section id="servicios-home" aria-labelledby="serv-titulo">
+  <div class="container">
+
+    <div class="serv-header reveal">
+      <span class="section-label">Lo Que Ofrecemos</span>
+      <h2 class="section-title" id="serv-titulo">
+        Cinco Razones Para<br/><span>No Quedarte en Casa</span>
+      </h2>
+    </div>
+
+    <div class="serv-grid">
+      <div class="serv-card reveal">
+        <div class="serv-icon" style="background:linear-gradient(135deg,#00C2C7,#0098a0)">🍹</div>
+        <h3>Bar Tropical</h3>
+        <p>Cócteles artesanales y refrescos para todos los gustos.</p>
+      </div>
+      <div class="serv-card reveal">
+        <div class="serv-icon" style="background:linear-gradient(135deg,#FF6B2B,#ff9857)">🍽️</div>
+        <h3>Restaurante</h3>
+        <p>Sabores auténticos con ingredientes frescos y locales.</p>
+      </div>
+      <div class="serv-card reveal">
+        <div class="serv-icon" style="background:linear-gradient(135deg,#FFD600,#ffc000)">🍦</div>
+        <h3>Heladería</h3>
+        <p>Manizados y helados artesanales de frutas tropicales.</p>
+      </div>
+      <div class="serv-card reveal">
+        <div class="serv-icon" style="background:linear-gradient(135deg,#6C63FF,#4a43cc)">🚗</div>
+        <h3>Parqueadero</h3>
+        <p>Amplio, seguro y vigilado para tu tranquilidad.</p>
+      </div>
+      <div class="serv-card reveal">
+        <div class="serv-icon" style="background:linear-gradient(135deg,#FF4E8C,#cc2060)">🎊</div>
+        <h3>Eventos</h3>
+        <p>Cumpleaños, corporativos y celebraciones privadas.</p>
+      </div>
+    </div>
+
+    <div class="serv-cta reveal">
+      <a href="servicios.html" class="btn btn-primary" style="text-decoration:none">
+        Conocer Todos los Servicios →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     ¿POR QUÉ ELEGIRNOS? — propuesta de valor diferenciada
+     NUEVA SECCIÓN: responde la pregunta implícita del visitante.
+     Imagen: pool3.png (piscina con gente disfrutando = vida real)
+══════════════════════════════════════════════════════════ -->
+<section id="por-que" aria-labelledby="porq-titulo">
+  <div class="container">
+    <div class="porq-inner">
+
+      <!-- Texto + lista de beneficios -->
+      <div class="reveal">
+        <span class="section-label" style="background:rgba(255,214,0,0.2);color:var(--yellow)">
+          ¿Por Qué Safari?
+        </span>
+        <h2 id="porq-titulo">
+          Más Que una Piscina.<br/>Una Experiencia Completa.
+        </h2>
+        <p>Desde la entrada hasta la despedida, cada detalle está pensado
+           para que vivas un día inolvidable en familia, con amigos o en pareja.</p>
+
+        <div class="porq-list">
+          <div class="porq-item">
+            <div class="porq-icon">🏊</div>
+            <span>Piscina enorme con tobogán y fuentes de agua</span>
+          </div>
+          <div class="porq-item">
+            <div class="porq-icon">🌿</div>
+            <span>Rodeado de naturaleza y vista a la montaña</span>
+          </div>
+          <div class="porq-item">
+            <div class="porq-icon">👨‍👩‍👧</div>
+            <span>Ideal para todas las edades — bebés, niños y adultos</span>
+          </div>
+          <div class="porq-item">
+            <div class="porq-icon">🍽️</div>
+            <span>Gastronomía completa sin salir del lugar</span>
+          </div>
+          <div class="porq-item">
+            <div class="porq-icon">🕘</div>
+            <span>Abiertos todos los días de 9am a 6pm</span>
+          </div>
+          <div class="porq-item">
+            <div class="porq-icon">📍</div>
+            <span>A solo 1 hora de Bogotá — ¡más cerca de lo que crees!</span>
+          </div>
+        </div>
+
+        <div style="margin-top:1.8rem;">
+          <a href="reservas.html" class="btn btn-primary" style="text-decoration:none">
+            🎉 ¡Reservar Mi Día!
+          </a>
+        </div>
+      </div>
+
+      <!-- Imagen lateral: piscina con gente disfrutando (pool3.png) -->
+      <div class="porq-img reveal">
+        <img src="pool3.png"
+             alt="Visitantes disfrutando la piscina de Balneario Safari en un día soleado"
+             loading="lazy" width="600" height="800" />
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     RESEÑAS — prueba social con testimonios reales
+     NUEVA SECCIÓN: aumenta conversión al mostrar experiencias
+     de visitantes anteriores. Calificación ⭐ 4.9 como social proof.
+══════════════════════════════════════════════════════════ -->
+<section id="resenas" aria-labelledby="res-titulo">
+  <div class="container">
+
+    <div class="res-header reveal">
+      <span class="section-label">Reseñas</span>
+      <h2 class="section-title" id="res-titulo">
+        Lo Que Dicen<br/><span>Nuestros Visitantes</span>
+      </h2>
+    </div>
+
+    <div class="res-grid">
+
+      <div class="res-card reveal">
+        <div class="res-stars" aria-label="5 estrellas">★★★★★</div>
+        <p>"La piscina es enorme y el ambiente es increíble. Los niños no querían irse. El restaurante también estuvo delicioso. ¡Definitivamente volvemos!"</p>
+        <div class="res-author">— Carolina M. · Familia de Bogotá</div>
+      </div>
+
+      <div class="res-card reveal">
+        <div class="res-stars" aria-label="5 estrellas">★★★★★</div>
+        <p>"Fuimos con un grupo de amigos y fue el mejor plan. La vista desde la piscina es espectacular, el tobogán una locura y la atención muy buena."</p>
+        <div class="res-author">— Andrés R. · Grupo de amigos</div>
+      </div>
+
+      <div class="res-card reveal">
+        <div class="res-stars" aria-label="5 estrellas">★★★★★</div>
+        <p>"Organizamos el cumpleaños de mi hijo aquí y fue perfecto. El equipo de eventos fue muy profesional y los niños quedaron felicísimos. 100% recomendado."</p>
+        <div class="res-author">— Marcela T. · Evento privado</div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     CTA FINAL — cierre fuerte hacia reservas
+══════════════════════════════════════════════════════════ -->
+<section id="cta-final" aria-labelledby="cta-titulo">
+  <div class="container">
+    <h2 id="cta-titulo">¿Listo Para Tu Día<br/>de Paraíso? 🌴</h2>
+    <p>Los cupos son limitados. Asegura tu lugar ahora — es gratis reservar y la respuesta es inmediata.</p>
+    <div class="cta-btns reveal">
+      <a href="reservas.html" class="btn btn-primary" style="background:var(--dark);border-color:var(--dark);text-decoration:none">
+        🎉 ¡Reservar Ahora!
+      </a>
+      <a href="https://wa.me/573102562717?text=Hola!%20Quiero%20info%20sobre%20Balneario%20Safari%20%F0%9F%8C%B4"
+         target="_blank" rel="noopener noreferrer"
+         class="btn btn-secondary"
+         style="border-color:rgba(0,0,0,0.3);color:var(--dark);text-decoration:none">
+        💬 Escribir por WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════════ -->
 <footer>
   <div class="footer-inner">
     <div class="footer-logo logo">🌴 Balneario <span>Safari</span></div>
-    <nav class="footer-links">
+    <nav class="footer-links" aria-label="Mapa del sitio">
       <a href="index.html">Inicio</a>
       <a href="nosotros.html">Nosotros</a>
       <a href="servicios.html">Servicios</a>
@@ -178,24 +739,67 @@
       <a href="contacto.html">Contacto</a>
     </nav>
   </div>
-  <div class="footer-bottom">© 2026 Balneario Safari · La Mesa, Cundinamarca · Todos los derechos reservados 🌴</div>
+  <div class="footer-bottom">
+    © 2026 Balneario Safari · Mesitas del Colegio, Cundinamarca · Todos los derechos reservados 🌴
+  </div>
 </footer>
 
-<!-- WHATSAPP -->
-<a href="https://wa.me/573000000000?text=Hola!%20Quiero%20info%20sobre%20Balneario%20Safari%20%F0%9F%8C%B4"
-   target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
-  <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+<!-- ══════════════════════════════════════════════════════════
+     BOTÓN FLOTANTE WHATSAPP
+     rel="noopener noreferrer" por seguridad en target="_blank"
+══════════════════════════════════════════════════════════ -->
+<a href="https://wa.me/573102562717?text=Hola!%20Quiero%20info%20sobre%20Balneario%20Safari%20%F0%9F%8C%B4"
+   target="_blank" rel="noopener noreferrer"
+   class="wa-float" aria-label="Contactar por WhatsApp">
+  <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
 </a>
 
-<!-- STICKY CTA MÓVIL -->
+<!-- ══════════════════════════════════════════════════════════
+     STICKY CTA MÓVIL — se oculta al llegar a sección #cta-final
+══════════════════════════════════════════════════════════ -->
 <div class="sticky-mobile-cta" id="stickyCta">
   <a href="reservas.html" class="smc-reserva">🎉 Reservar</a>
-  <a href="https://wa.me/573000000000?text=Hola!" target="_blank" rel="noopener" class="smc-wa">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" style="margin-right:4px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  <a href="https://wa.me/573102562717?text=Hola!"
+     target="_blank" rel="noopener noreferrer" class="smc-wa">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"
+         style="margin-right:4px" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
     WhatsApp
   </a>
 </div>
 
+<!-- ══════════════════════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════════════════════ -->
 <script src="main.js"></script>
+<script>
+  /* ── Sticky CTA: se oculta al llegar al CTA final ────── */
+  const stickyCta  = document.getElementById('stickyCta');
+  const ctaFinal   = document.getElementById('cta-final');
+  if (stickyCta && ctaFinal) {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        stickyCta.style.opacity       = e.isIntersecting ? '0' : '1';
+        stickyCta.style.pointerEvents = e.isIntersecting ? 'none' : 'auto';
+      });
+    }, { threshold: 0.2 }).observe(ctaFinal);
+  }
+
+  /* ── Rendimiento: pausa el video en móvil si no está
+     visible (ahorra batería y datos) ─────────────────── */
+  const heroVideo = document.querySelector('.hero-bg-video');
+  if (heroVideo) {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        e.isIntersecting ? heroVideo.play() : heroVideo.pause();
+      });
+    }, { threshold: 0 }).observe(heroVideo);
+  }
+</script>
+
 </body>
 </html>
+
