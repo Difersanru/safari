@@ -347,11 +347,206 @@ section { position: relative; }
 
 /* Enlace activo: resalta la sección actual */
 .nav-links a.active { color: var(--yellow); }
+/* ─────────────────────────────────────────────────────────────
+   8. Pasarela
+───────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   PASARELA DE FOTOGRAFÍAS
+═══════════════════════════════════════════════════════════ */
+
+.photo-slider {
+  position: relative;
+  width: 100%;
+  height: 58vh;
+  min-height: 320px;
+  max-height: 650px;
+  overflow: hidden;
+  background: var(--dark);
+}
+
+.slider-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 
 
+/* ── Degradado para mejorar la visualización ── */
+
+.photo-slider::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.05),
+    rgba(0,0,0,0.15)
+  );
+  pointer-events: none;
+}
+
+
+/* ── Flechas ── */
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+
+  width: 44px;
+  height: 44px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(0,0,0,0.38);
+  color: var(--white);
+
+  font-size: 2rem;
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.slider-prev {
+  left: 1rem;
+}
+
+.slider-next {
+  right: 1rem;
+}
+
+.slider-btn:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
+@media (hover: hover) {
+
+  .slider-btn:hover {
+    background: rgba(0,0,0,0.65);
+    transform: translateY(-50%) scale(1.08);
+  }
+
+}
+
+
+/* ── Indicadores ── */
+
+.slider-dots {
+  position: absolute;
+  z-index: 6;
+
+  bottom: 1.2rem;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.55);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+
+.dot.active {
+  background: var(--white);
+  transform: scale(1.35);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   TABLET
+═══════════════════════════════════════════════════════════ */
+
+@media (min-width: 600px) {
+
+  .photo-slider {
+    height: 62vh;
+  }
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   DESKTOP
+═══════════════════════════════════════════════════════════ */
+
+@media (min-width: 1024px) {
+
+  .photo-slider {
+    height: 70vh;
+    min-height: 500px;
+    max-height: 750px;
+  }
+
+  .slider-btn {
+    width: 52px;
+    height: 52px;
+  }
+
+  .slider-prev {
+    left: 2rem;
+  }
+
+  .slider-next {
+    right: 2rem;
+  }
+
+}
 /* ─────────────────────────────────────────────────────────────
    8. FOOTER
 ───────────────────────────────────────────────────────────── */
+
+
 footer {
   background: var(--dark);
   padding: 2.5rem var(--section-px) 1.8rem;
