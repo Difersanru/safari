@@ -781,10 +781,14 @@ section { position: relative; }
 }
 .menu-card-icon {
   width: 70px; height: 70px; border-radius: 1rem;
-  background: linear-gradient(135deg, var(--yellow), #ffb300);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2rem; flex-shrink: 0; margin: 0 auto;
+  overflow: hidden;
+  flex-shrink: 0; margin: 0 auto;
   box-shadow: 0 8px 20px rgba(255,193,7,0.35);
+}
+.menu-card-icon img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .menu-card-body { text-align: center; }
 .menu-card-body h3 { font-size: clamp(1.15rem,4vw,1.4rem); color: var(--dark); margin-bottom: 0.5rem; }
