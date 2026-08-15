@@ -54,6 +54,54 @@
     .detail-text h3 { font-size: clamp(1.5rem, 4vw, 2rem); color: var(--dark); margin-bottom: 0.7rem; }
     .detail-text p  { font-size: clamp(0.93rem, 3vw, 1rem); color: #4A5568; line-height: 1.8; margin-bottom: 1rem; }
 
+    /* ── CALLOUT MENÚ — dentro de la sección Restaurante ── */
+    .menu-callout {
+      display: flex; gap: 1rem; align-items: center;
+      margin-top: 1.4rem; padding: 1rem;
+      background: linear-gradient(160deg, #fff8e1 0%, #fffaf0 100%);
+      border: 2px solid rgba(255,214,0,0.4);
+      border-radius: 1.1rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .menu-callout-img {
+      width: 84px; height: 84px;
+      border-radius: 0.8rem;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .menu-callout-body { flex: 1; min-width: 0; }
+    .menu-callout-badge {
+      display: inline-block;
+      background: rgba(255,107,43,0.12); color: var(--orange);
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.5px;
+      text-transform: uppercase; padding: 0.2rem 0.6rem;
+      border-radius: 50px; margin-bottom: 0.4rem;
+    }
+    .menu-callout-body h4 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(0.95rem, 3vw, 1.1rem);
+      color: var(--dark); margin-bottom: 0.3rem;
+    }
+    .menu-callout-body p {
+      font-size: 0.82rem; color: var(--muted); line-height: 1.5;
+      margin-bottom: 0.8rem;
+    }
+    .menu-callout-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .menu-callout-actions .btn {
+      min-height: 40px; padding: 0.5rem 1.1rem; font-size: 0.85rem;
+      text-decoration: none;
+    }
+    .menu-callout-actions .btn-secondary {
+      color: var(--dark); border-color: rgba(26,34,51,0.25);
+    }
+    @media (hover: hover) {
+      .menu-callout-actions .btn-secondary:hover { background: rgba(26,34,51,0.06); }
+    }
+    @media (max-width: 480px) {
+      .menu-callout { flex-direction: column; align-items: flex-start; text-align: left; }
+      .menu-callout-img { width: 100%; height: 140px; }
+    }
+
     /* ─── TABLET ≥ 600px ── */
     @media (min-width: 600px) {
       .services-grid { grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
