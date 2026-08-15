@@ -190,19 +190,28 @@ section { position: relative; }
 ───────────────────────────────────────────────────────────── */
 #navbar {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   z-index: 1000;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.8rem var(--section-px);
-  background: rgba(0,155,160,0.96);
+
+  height: 72px;
+  min-height: 72px;
+
+  padding: 0 1rem;
+
+  background: rgba(0, 155, 160, 0.97);
+
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+
   box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+
   transition: background 0.3s;
-  min-height: 62px;
 }
 
 /* ══ LOGO DEL HEADER ═══════════════════════════════════════ */
@@ -210,30 +219,47 @@ section { position: relative; }
 .logo {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+
+  width: 88px;
+  height: 60px;
+
   flex-shrink: 0;
-  text-decoration: none;
-  line-height: 0;
+  z-index: 3;
 }
 
 .logo img {
   display: block;
-  width: 150px;
-  height: auto;
-  max-height: 64px;
+
+  width: 88px;
+  height: 54px;
+
   object-fit: contain;
 }
 
 /* Nombre del balneario — visible sólo en móviles */
+/* ══ NOMBRE DEL BALNEARIO — SÓLO MÓVIL ═══════════════════ */
+
 .mobile-brand-name {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
   display: block;
+
   color: var(--white);
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.05rem;
-  line-height: 1.1;
-  text-align: center;
+  font-family: 'Fredoka One', 'Nunito', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1;
+
   white-space: nowrap;
-  margin: 0 auto;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.18);
+  text-align: center;
+
+  letter-spacing: 0.3px;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+
+  z-index: 2;
 }
 
 /* Ocultar el nombre en tablet y PC */
@@ -248,22 +274,37 @@ section { position: relative; }
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+
   gap: 5px;
+
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+
+  padding: 8px;
+
   cursor: pointer;
-  padding: 9px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: none;
   background: transparent;
-  min-width: 44px;
-  min-height: 44px;
+
+  z-index: 3;
 }
+
 .hamburger span {
-  width: 24px;
-  height: 2.5px;
-  background: var(--white);
-  border-radius: 3px;
-  transition: transform 0.3s, opacity 0.3s;
   display: block;
+
+  width: 28px;
+  height: 3px;
+
+  background: var(--white);
+  border-radius: 4px;
+
+  transition:
+    transform 0.3s,
+    opacity 0.3s;
 }
 /* Animación "X" cuando está abierto */
 .hamburger.open span:nth-child(1) { transform: translateY(7.5px)  rotate(45deg); }
