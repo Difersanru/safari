@@ -548,36 +548,180 @@ section { position: relative; }
 ───────────────────────────────────────────────────────────── */
 
 
-footer {
+/* ═══════════════════════════════════════════════════════════
+   FOOTER — BALNEARIO SAFARI
+═══════════════════════════════════════════════════════════ */
+
+.site-footer {
   background: var(--dark);
-  padding: 2.5rem var(--section-px) 1.8rem;
-  color: rgba(255,255,255,0.6);
-}
-.footer-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.3rem;
-  margin-bottom: 1.6rem;
-  text-align: center;
-}
-.footer-logo { font-size: 1.45rem; color: var(--white); }
-.footer-logo span { color: var(--yellow); }
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem 1.1rem;
-}
-.footer-links a { font-size: 0.86rem; transition: color 0.2s; padding: 0.25rem; }
-.footer-links a:hover { color: var(--turquoise); }
-.footer-bottom {
-  text-align: center;
-  font-size: 0.76rem;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  padding-top: 1.2rem;
+  color: rgba(255,255,255,0.72);
+  padding: 3.5rem var(--section-px) 0;
 }
 
+/* Contenido principal */
+.footer-inner {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+
+  padding-bottom: 2.8rem;
+}
+
+/* ── Identidad ─────────────────────────────────────────── */
+
+.footer-brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.footer-brand-link img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.footer-brand-name {
+  display: flex;
+  flex-direction: column;
+
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.footer-brand-name span {
+  color: var(--white);
+}
+
+.footer-brand-name strong {
+  color: var(--yellow);
+  font-weight: 400;
+}
+
+.footer-brand p {
+  max-width: 320px;
+  margin-top: 1rem;
+
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.62);
+}
+
+/* ── Columnas ──────────────────────────────────────────── */
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+}
+
+.footer-column h3 {
+  color: var(--white);
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-column a,
+.footer-column p {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.65);
+}
+
+.footer-column a {
+  transition: color 0.2s, transform 0.2s;
+}
+
+.footer-column a:hover {
+  color: var(--turquoise);
+  transform: translateX(3px);
+}
+
+/* ── WhatsApp ──────────────────────────────────────────── */
+
+.footer-whatsapp {
+  margin-top: 0.6rem;
+
+  background: #25D366;
+  color: var(--white) !important;
+
+  padding: 0.65rem 1rem;
+  border-radius: 50px;
+
+  font-weight: 800;
+}
+
+.footer-whatsapp:hover {
+  color: var(--white) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ── Línea inferior ────────────────────────────────────── */
+
+.footer-bottom {
+  width: 100%;
+  max-width: 1240px;
+
+  margin: 0 auto;
+
+  border-top: 1px solid rgba(255,255,255,0.1);
+
+  padding: 1.3rem 0;
+
+  text-align: center;
+}
+
+.footer-bottom p {
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER — TABLET
+═══════════════════════════════════════════════════════════ */
+
+@media (min-width: 600px) {
+
+  .footer-inner {
+    grid-template-columns: 1.5fr 1fr 1.3fr;
+    gap: 3rem;
+  }
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER — DESKTOP
+═══════════════════════════════════════════════════════════ */
+
+@media (min-width: 1024px) {
+
+  .site-footer {
+    padding-top: 4rem;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1.5fr 1fr 1.3fr;
+    gap: 5rem;
+  }
+
+  .footer-brand-link img {
+    width: 82px;
+    height: 82px;
+  }
+
+  .footer-brand-name {
+    font-size: 1.6rem;
+  }
+
+}
 
 /* ─────────────────────────────────────────────────────────────
    9. WHATSAPP FLOTANTE
