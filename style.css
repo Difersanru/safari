@@ -205,15 +205,23 @@ section { position: relative; }
   min-height: 62px;
 }
 
+/* ══ LOGO DEL HEADER ═══════════════════════════════════════ */
+
 .logo {
-  font-size: 1.4rem;
-  color: var(--white);
-  letter-spacing: 0.5px;
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  flex-shrink: 0;
+  text-decoration: none;
+  line-height: 0;
 }
-.logo span { color: var(--yellow); }
+
+.logo img {
+  display: block;
+  width: 150px;
+  height: auto;
+  max-height: 64px;
+  object-fit: contain;
+}
 
 /* Hamburger */
 .hamburger {
