@@ -28,7 +28,173 @@ if (hamburger && navLinks) {
   });
 }
 
+/* ─────────────────────────────────────────────────────────────
+   2. Pasarela
+───────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   PASARELA DE FOTOGRAFÍAS
+═══════════════════════════════════════════════════════════ */
 
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+const prevButton = document.querySelector('.slider-prev');
+const nextButton = document.querySelector('.slider-next');
+
+let currentSlide = 0;
+let autoSlide;
+
+
+/* ── Mostrar fotografía ── */
+
+function showSlide(index) {
+
+  slides.forEach(slide => {
+    slide.classList.remove('active');
+  });
+
+  dots.forEach(dot => {
+    dot.classList.remove('active');
+  });
+
+  slides[index].classList.add('active');
+  dots[index].classList.add('active');
+
+  currentSlide = index;
+}
+
+
+/* ── Siguiente ── */
+
+function nextSlide() {
+
+  const next =
+    (currentSlide + 1) % slides.length;
+
+  showSlide(next);
+}
+
+
+/* ── Anterior ── */
+
+function prevSlide() {
+
+  const previous =
+    (currentSlide - 1 + slides.length) % slides.length;
+
+  showSlide(previous);
+}
+
+
+/* ── Botones ── */
+
+nextButton.addEventListener('click', () => {
+
+  nextSlide();
+
+  restartAutoSlide();
+
+});
+
+prevButton.addEventListener('click', () => {
+
+  prevSlide();
+
+  restartAutoSlide();
+
+});
+
+
+/* ── Indicadores ── */
+
+dots.forEach((dot, index) => {
+
+  dot.addEventListener('click', () => {
+
+    showSlide(index);
+
+    restartAutoSlide();
+
+  });
+
+});
+
+
+/* ═══════════════════════════════════════════════════════════
+   CAMBIO AUTOMÁTICO
+═══════════════════════════════════════════════════════════ */
+
+function startAutoSlide() {
+
+  autoSlide = setInterval(() => {
+
+    nextSlide();
+
+  }, 5000);
+
+}
+
+
+function restartAutoSlide() {
+
+  clearInterval(autoSlide);
+
+  startAutoSlide();
+
+}
+
+
+startAutoSlide();
+
+
+/* ═══════════════════════════════════════════════════════════
+   SOPORTE PARA SWIPE EN MÓVILES
+═══════════════════════════════════════════════════════════ */
+
+const slider = document.querySelector('.photo-slider');
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+slider.addEventListener('touchstart', (event) => {
+
+  touchStartX = event.changedTouches[0].screenX;
+
+}, { passive: true });
+
+
+slider.addEventListener('touchend', (event) => {
+
+  touchEndX = event.changedTouches[0].screenX;
+
+  handleSwipe();
+
+}, { passive: true });
+
+
+function handleSwipe() {
+
+  const difference =
+    touchStartX - touchEndX;
+
+  /* Swipe hacia la izquierda */
+  if (difference > 50) {
+
+    nextSlide();
+
+    restartAutoSlide();
+
+  }
+
+  /* Swipe hacia la derecha */
+  if (difference < -50) {
+
+    prevSlide();
+
+    restartAutoSlide();
+
+  }
+
+}
 /* ─────────────────────────────────────────────────────────────
    2. SCROLL REVEAL — elementos aparecen al entrar en pantalla
 ───────────────────────────────────────────────────────────── */
