@@ -839,27 +839,24 @@ section { position: relative; }
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 0.75rem 1.1rem;
-  display: flex;
-  gap: 0.65rem;
   border-top: 1px solid rgba(255,255,255,0.1);
   transition: opacity 0.3s;
 }
 .sticky-mobile-cta a {
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  border-radius: 0.75rem;
+  gap: 0.5rem;
+  min-height: 50px;
+  border-radius: 0.9rem;
   font-family: 'Fredoka One', cursive;
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: var(--white);
-  transition: opacity 0.2s;
+  background: var(--orange);
+  box-shadow: 0 4px 16px rgba(255,107,43,0.4);
+  transition: opacity 0.2s, transform 0.2s;
 }
-.sticky-mobile-cta a:active { opacity: 0.82; }
-.smc-reserva { background: var(--orange); }
-.smc-wa      { background: #25D366; }
-
+.sticky-mobile-cta a:active { opacity: 0.85; transform: scale(0.98); }
 
 /* ═══════════════════════════════════════════════════════════════
    MEDIA QUERIES — Escalado progresivo (Mobile → Desktop)
