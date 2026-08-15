@@ -223,6 +223,26 @@ section { position: relative; }
   object-fit: contain;
 }
 
+/* Nombre del balneario — visible sólo en móviles */
+.mobile-brand-name {
+  display: block;
+  color: var(--white);
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.05rem;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+  margin: 0 auto;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.18);
+}
+
+/* Ocultar el nombre en tablet y PC */
+@media (min-width: 600px) {
+  .mobile-brand-name {
+    display: none;
+  }
+}
+
 /* Hamburger */
 .hamburger {
   display: flex;
