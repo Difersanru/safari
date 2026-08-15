@@ -857,7 +857,6 @@ section { position: relative; }
   transition: opacity 0.2s, transform 0.2s;
 }
 .sticky-mobile-cta a:active { opacity: 0.85; transform: scale(0.98); }
-
 /* ═══════════════════════════════════════════════════════════════
    MEDIA QUERIES — Escalado progresivo (Mobile → Desktop)
    ═══════════════════════════════════════════════════════════════ */
